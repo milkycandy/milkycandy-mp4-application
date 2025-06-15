@@ -47,7 +47,6 @@ void ActivityManager::finishCurrentActivity() {
         Activity* newTop = activityStack.back();
         lv_obj_clear_flag(newTop->root, LV_OBJ_FLAG_HIDDEN);
         newTop->onResume();
-        addSwipeGesture(newTop);
     }
 }
 
@@ -55,72 +54,73 @@ void ActivityManager::afterStartAnimation() {
     if (activityStack.empty()) return;
     Activity* currentTop = activityStack.back();
     currentTop->onResume();
-    addSwipeGesture(currentTop);
-}
-
-void ActivityManager::addSwipeGesture(Activity* activity) {
-    if (activity->swipeToReturnEnabled && activityStack.size() > 1) {
-        lv_obj_add_event_cb(activity->root, swipe_event_cb, LV_EVENT_ALL, this);
-    }
 }
 
 
-// --- 动画回调函数已被完全删除 ---
 
+void ActivityManager::enableGlobalSwipe() {
+    lv_timer_create([](lv_timer_t*) {
+        static lv_point_t start_point;
+        static bool pressed_last = false;
+        static bool is_swiping = false;
+        static bool started = false;
 
-void ActivityManager::swipe_event_cb(lv_event_t* e) {
-    lv_obj_t* target = static_cast<lv_obj_t*>(lv_event_get_target(e));
-    lv_event_code_t code = lv_event_get_code(e);
-    auto* manager = static_cast<ActivityManager*>(lv_event_get_user_data(e));
+        lv_indev_t * indev = lv_indev_get_next(NULL);
+        while (indev) {
+            if (lv_indev_get_type(indev) == LV_INDEV_TYPE_POINTER) break;
+            indev = lv_indev_get_next(indev);
+        }
+        if (!indev) return;
 
-    lv_indev_t* indev = lv_indev_get_act();
-    if (!indev || !manager) return;
+        lv_point_t point;
+        lv_indev_get_point(indev, &point);
+        lv_indev_state_t state = lv_indev_get_state(indev);
 
-    static lv_point_t start_pos;
-    static bool is_swiping = false;
+        ActivityManager& manager = ActivityManager::getInstance();
 
-    if (code == LV_EVENT_PRESSED) {
-        lv_indev_get_point(indev, &start_pos);
-        is_swiping = false;
-    } else if (code == LV_EVENT_PRESSING) {
-        lv_point_t current_pos;
-        lv_indev_get_point(indev, &current_pos);
-        lv_coord_t diff_x = current_pos.x - start_pos.x;
-        lv_coord_t diff_y = current_pos.y - start_pos.y;
-
-        if (!is_swiping && diff_x > 10 && std::abs(diff_x) > std::abs(diff_y)) {
-            if (manager->activityStack.size() > 1) {
-                Activity* prev_activity = manager->activityStack[manager->activityStack.size() - 2];
-                lv_obj_clear_flag(prev_activity->root, LV_OBJ_FLAG_HIDDEN);
+        if (state == LV_INDEV_STATE_PRESSED) {
+            if (!pressed_last) {
+                start_point = point;
+                started = false;
             }
-            is_swiping = true;
-        }
 
-        if (is_swiping) {
-            // 只有当手指向右滑动时才移动，但允许滑回到0的位置
-            // 防止界面被向左拖动到屏幕外
-            lv_obj_set_x(target, diff_x > 0 ? diff_x : 0);
-        }
-    } else if (code == LV_EVENT_RELEASED || code == LV_EVENT_PRESS_LOST) {
-        if (!is_swiping) return;
-        is_swiping = false;
+            lv_coord_t dx = point.x - start_point.x;
+            lv_coord_t dy = point.y - start_point.y;
 
-        lv_coord_t current_x = lv_obj_get_x(target);
-        lv_coord_t swipe_threshold = lv_obj_get_width(lv_screen_active()) / 3;
+            if (!started && dx > 10 && std::abs(dx) > std::abs(dy)) {
+                if (manager.activityStack.size() > 1) {
+                    Activity* prev = manager.activityStack[manager.activityStack.size() - 2];
+                    lv_obj_clear_flag(prev->root, LV_OBJ_FLAG_HIDDEN);
+                    is_swiping = true;
+                    started = true;
+                }
+            }
 
-        // --- 动画移除 ---
-        if (current_x > swipe_threshold) {
-            // 成功返回：之前是动画滑出，现在直接调用finish
-            manager->finishCurrentActivity();
+            if (is_swiping) {
+                Activity* current = manager.activityStack.back();
+                lv_obj_set_x(current->root, dx > 0 ? dx : 0);
+            }
+
         } else {
-            // 取消返回：之前是动画弹回，现在直接设置x坐标为0
-            lv_obj_set_x(target, 0);
+            if (is_swiping) {
+                Activity* current = manager.activityStack.back();
+                lv_coord_t x = lv_obj_get_x(current->root);
+                lv_coord_t threshold = lv_obj_get_width(lv_screen_active()) / 3;
 
-            // 之前在弹回动画结束后隐藏下层页面，现在直接操作
-            if (manager->activityStack.size() > 1) {
-                Activity* prev_activity = manager->activityStack[manager->activityStack.size() - 2];
-                lv_obj_add_flag(prev_activity->root, LV_OBJ_FLAG_HIDDEN);
+                if (x > threshold) {
+                    manager.finishCurrentActivity();
+                } else {
+                    lv_obj_set_x(current->root, 0);
+                    if (manager.activityStack.size() > 1) {
+                        Activity* prev = manager.activityStack[manager.activityStack.size() - 2];
+                        lv_obj_add_flag(prev->root, LV_OBJ_FLAG_HIDDEN);
+                    }
+                }
             }
+            is_swiping = false;
         }
-    }
+
+        pressed_last = (state == LV_INDEV_STATE_PRESSED);
+
+    }, 16, NULL); // ~60fps
 }

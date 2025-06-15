@@ -27,21 +27,6 @@ void *tick_thread(void *data)
     return NULL;
 }
 
-static void print_touch_position(lv_timer_t * timer) {
-    lv_indev_t * indev = lv_indev_get_next(NULL);
-    while (indev) {
-        if (lv_indev_get_type(indev) == LV_INDEV_TYPE_POINTER) {
-            lv_point_t p;
-            lv_indev_get_point(indev, &p);
-            lv_indev_state_t state = lv_indev_get_state(indev);
-            if (state == LV_INDEV_STATE_PRESSED) {
-                printf("[TOUCH] Pressed at (%d, %d)\n", p.x, p.y);
-            }
-        }
-        indev = lv_indev_get_next(indev);
-    }
-}
-
 
 int main(void)
 {
@@ -68,14 +53,17 @@ int main(void)
     lv_obj_clear_flag(lv_screen_active(), LV_OBJ_FLAG_SCROLLABLE);
 
     // ----------------------------
-    lv_timer_create(print_touch_position, 500, NULL);
+    // lv_timer_create(print_touch_position, 5, NULL);
 
     ActivityManager &manager = ActivityManager::getInstance();
+    
     manager.startActivity(new HomeActivity(&manager));
+    manager.enableGlobalSwipe();
 
     // 主循环
     while (1) {
         lv_timer_handler();
+        
         usleep(1000); // 主线程休眠 1ms
     }
 
