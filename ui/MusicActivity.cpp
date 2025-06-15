@@ -3,7 +3,6 @@
 #include "lvgl.h"
 
 void MusicActivity::onCreate() {
-    // 可以在这里设置是否允许滑动返回
     // swipeToReturnEnabled = false;
 
     lv_obj_set_style_bg_color(root, lv_palette_main(LV_PALETTE_GREEN), 0);

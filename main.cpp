@@ -48,12 +48,13 @@ int main(void)
     // 初始化输入设备
     lv_indev_t * indev = lv_evdev_create(LV_INDEV_TYPE_POINTER, "/dev/input/event0");
 
+    lv_timer_t * t = lv_indev_get_read_timer(indev);
+    lv_timer_set_period(t, 5);
+
     // 启动demo
     // ui_init();
     lv_obj_clear_flag(lv_screen_active(), LV_OBJ_FLAG_SCROLLABLE);
 
-    // ----------------------------
-    // lv_timer_create(print_touch_position, 5, NULL);
 
     ActivityManager &manager = ActivityManager::getInstance();
     

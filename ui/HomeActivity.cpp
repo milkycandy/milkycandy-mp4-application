@@ -1,6 +1,6 @@
 #include "HomeActivity.h"
 #include "ActivityManager.h"
-#include "MusicActivity.h" // 包含要跳转到的页面头文件
+#include "MusicActivity.h"
 #include "lvgl.h"
 
 void HomeActivity::onCreate() {
@@ -27,6 +27,8 @@ void HomeActivity::onResume() {
 void HomeActivity::onPause() {
     LV_LOG_USER("HomeActivity onPause");
 }
+
+// 一般情况下这个 activity 不会出现onDestory
 
 void HomeActivity::go_to_music_event_cb(lv_event_t* e) {
     ActivityManager& manager = ActivityManager::getInstance();

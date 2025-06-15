@@ -51,12 +51,10 @@ void ActivityManager::finishCurrentActivity() {
 }
 
 void ActivityManager::afterStartAnimation() {
-    if (activityStack.empty()) return;
+    if (activityStack.empty()) return; // 一般来讲不可能是空的，因为HomeActivity关不掉
     Activity* currentTop = activityStack.back();
     currentTop->onResume();
 }
-
-
 
 void ActivityManager::enableGlobalSwipe() {
     lv_timer_create([](lv_timer_t*) {
@@ -64,6 +62,10 @@ void ActivityManager::enableGlobalSwipe() {
         static bool pressed_last = false;
         static bool is_swiping = false;
         static bool started = false;
+
+        ActivityManager& manager = ActivityManager::getInstance();
+        Activity* current = manager.activityStack.back();
+        if (!current->swipeToReturnEnabled) return;
 
         lv_indev_t * indev = lv_indev_get_next(NULL);
         while (indev) {
@@ -75,8 +77,6 @@ void ActivityManager::enableGlobalSwipe() {
         lv_point_t point;
         lv_indev_get_point(indev, &point);
         lv_indev_state_t state = lv_indev_get_state(indev);
-
-        ActivityManager& manager = ActivityManager::getInstance();
 
         if (state == LV_INDEV_STATE_PRESSED) {
             if (!pressed_last) {
@@ -103,6 +103,7 @@ void ActivityManager::enableGlobalSwipe() {
 
         } else {
             if (is_swiping) {
+                // 松手，开始种菜
                 Activity* current = manager.activityStack.back();
                 lv_coord_t x = lv_obj_get_x(current->root);
                 lv_coord_t threshold = lv_obj_get_width(lv_screen_active()) / 3;
