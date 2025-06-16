@@ -2,6 +2,8 @@
 #include <vector>
 #include "Activity.h"
 
+#define ANIMATION_DURATION     300
+
 class ActivityManager {
 public:
     static ActivityManager& getInstance();
@@ -20,8 +22,8 @@ private:
     ActivityManager() = default;
     ~ActivityManager();
 
-    void addSwipeGesture(Activity* activity);
-    void afterStartAnimation();
+    void appear_Animation(lv_obj_t* target, lv_anim_ready_cb_t ready_cb, void* user_data, int startPosition);
+    void disappear_Animation(lv_obj_t* target, lv_anim_ready_cb_t ready_cb, void* user_data);
 
 
 private:

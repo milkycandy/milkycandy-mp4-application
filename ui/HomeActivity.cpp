@@ -5,6 +5,7 @@
 
 void HomeActivity::onCreate() {
     // lv_obj_set_style_bg_color(root, lv_palette_main(LV_PALETTE_BLUE), 0);
+    enableEnterAnimation = false; // 关闭进入动画
 
     lv_obj_t* label = lv_label_create(root);
     lv_label_set_text(label, "Home Activity");
