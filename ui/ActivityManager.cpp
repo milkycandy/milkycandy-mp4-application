@@ -107,6 +107,13 @@ void ActivityManager::finishCurrentActivity() {
     disappear_Animation(activityToFinish->root, AnimationCallbacks::destroyActivity, activityToFinish);
 }
 
+Activity* ActivityManager::getCurrentActivity() const {
+    if (activityStack.empty()) {
+        return nullptr;
+    }
+    return activityStack.back();
+}
+
 void ActivityManager::enableGlobalSwipe() {
     lv_timer_create([](lv_timer_t*) {
         auto& manager = ActivityManager::getInstance();

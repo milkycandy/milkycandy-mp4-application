@@ -9,10 +9,12 @@
 #include "ui/ActivityManager.h"
 #include "ui/HomeActivity.h"
 #include "ui/MusicActivity.h"
+#include "ui/fonts/FontManager.h"
+#include "ui/styles/StyleManager.h"
 // #include "ui/ui.h"
 
 // 精准的 1ms LVGL tick 定时器
-void *tick_thread(void *data)
+void *tickThread(void *data)
 {
     (void)data;
     struct timespec ts;
@@ -27,7 +29,6 @@ void *tick_thread(void *data)
     return NULL;
 }
 
-
 int main(void)
 {
     printf("[LVGL] GoGoGo!\n");
@@ -36,7 +37,7 @@ int main(void)
 
     // 启动精确 tick 定时线程
     pthread_t tick_th;
-    pthread_create(&tick_th, NULL, tick_thread, NULL);
+    pthread_create(&tick_th, NULL, tickThread, NULL);
 
     // 初始化 DRM 显示
     lv_display_t * disp = lv_drm_disp_create(0);
@@ -50,6 +51,8 @@ int main(void)
 
     lv_timer_t * t = lv_indev_get_read_timer(indev);
     lv_timer_set_period(t, 5);
+
+    StyleManager::init();
 
     // 启动demo
     // ui_init();

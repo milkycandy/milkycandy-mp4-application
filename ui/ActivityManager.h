@@ -14,6 +14,7 @@ public:
 
     void startActivity(Activity* newActivity);
     void finishCurrentActivity();
+    Activity* getCurrentActivity() const;
 
     // 不是给 activity 用的，启用后全局生效
     void enableGlobalSwipe();
