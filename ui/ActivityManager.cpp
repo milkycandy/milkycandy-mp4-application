@@ -170,6 +170,9 @@ void ActivityManager::handleSwipeMove(const lv_point_t& point, const lv_point_t&
 
     if (SwipeGesture::state.isSwiping) {
         lv_coord_t dx = point.x - startPoint.x;
+        if (dx < 0) {
+            dx = 0;
+        }
         lv_obj_set_x(activityStack.back()->root, dx);
     }
 }

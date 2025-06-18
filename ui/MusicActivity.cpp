@@ -1,5 +1,7 @@
 #include "MusicActivity.h"
 #include "ActivityManager.h"
+#include "widgets/Dialog.h"
+#include "widgets/Toast.h"
 #include "lvgl.h"
 
 void MusicActivity::onCreate() {
@@ -25,5 +27,24 @@ void MusicActivity::onDestroy() {
 }
 
 void MusicActivity::back_button_event_cb(lv_event_t* e) {
-    ActivityManager::getInstance().finishCurrentActivity();
+    // ActivityManager::getInstance().finishCurrentActivity();
+        Dialog::showDualButton(
+        "你好",
+        "早上好！\n我是一个双按钮Dialog! 你想见见单按钮Dialog吗？\n希望你能喜欢这个mp4！",
+        []() {
+            Toast::show("来了！");
+            Dialog::showSingleButton(
+                "Hi",
+                "我是单按钮Dialog，向你问好！",
+                 []() {
+                    Toast::show("下次见！");
+                 }
+            );
+        },
+        []() {
+            Toast::show("那拜拜！");
+        },
+        "好捏",
+        "不要"
+    );
 }

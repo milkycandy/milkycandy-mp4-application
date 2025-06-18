@@ -38,26 +38,26 @@ void HomeActivity::onPause() {
 // 一般情况下这个 activity 不会出现onDestory
 
 void HomeActivity::go_to_music_event_cb(lv_event_t* e) {
-    // ActivityManager& manager = ActivityManager::getInstance();
-    // manager.startActivity(new MusicActivity(&manager));
+    ActivityManager& manager = ActivityManager::getInstance();
+    manager.startActivity(new MusicActivity(&manager));
     // Toast::show("你好，我是Toast！");
-    Dialog::showDualButton(
-        "你好",
-        "我是一个双按钮Dialog!\n你想见见单按钮Dialog吗？",
-        []() {
-            Toast::show("来了！");
-            Dialog::showSingleButton(
-                "Hi",
-                "我是单按钮Dialog，向你问好！",
-                 []() {
-                    Toast::show("下次见！");
-                 }
-            );
-        },
-        []() {
-            Toast::show("那拜拜！");
-        },
-        "好捏",
-        "不要"
-    );
+    // Dialog::showDualButton(
+    //     "你好",
+    //     "我是一个双按钮Dialog! 你想见见单按钮Dialog吗？天地玄黄，宇宙洪荒。日月盈昃，辰宿列张。The quick brown fox jumps over the lazy dog. 1234567890。こんにちは、世界！今日はいい天気ですね。富士山が見える。",
+    //     []() {
+    //         Toast::show("来了！");
+    //         Dialog::showSingleButton(
+    //             "Hi",
+    //             "我是单按钮Dialog，向你问好！",
+    //              []() {
+    //                 Toast::show("下次见！");
+    //              }
+    //         );
+    //     },
+    //     []() {
+    //         Toast::show("那拜拜！");
+    //     },
+    //     "好捏",
+    //     "不要"
+    // );
 }

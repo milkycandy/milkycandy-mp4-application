@@ -19,7 +19,7 @@ Dialog::Dialog(const std::string& title, const std::string& text, bool is_dual_b
     lv_coord_t dialog_height = lv_obj_get_height(alert_dialog_);
     printf("Dialog height is : %d\n", dialog_height);
     anim_end_y_ = -19;
-    anim_start_y_ = 270;
+    anim_start_y_ = 300;
 
     // 设置初始Y坐标为屏幕外
     lv_obj_set_y(alert_dialog_, anim_start_y_);
@@ -57,7 +57,8 @@ void Dialog::create_ui(lv_obj_t* parent, const std::string& title, const std::st
     lv_obj_set_style_bg_opa(alert_dialog_, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_pad_all(alert_dialog_, 0, 0);
     lv_obj_set_style_pad_bottom(alert_dialog_, 24, 0);
-    lv_obj_clear_flag(alert_dialog_, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);
+    lv_obj_add_flag(alert_dialog_, LV_OBJ_FLAG_CLICKABLE);
+    lv_obj_clear_flag(alert_dialog_, LV_OBJ_FLAG_SCROLLABLE);
 
     lv_obj_t* ui_title = lv_label_create(alert_dialog_);
     lv_label_set_text(ui_title, title.c_str());
@@ -67,10 +68,12 @@ void Dialog::create_ui(lv_obj_t* parent, const std::string& title, const std::st
     lv_obj_t* ui_text = lv_label_create(alert_dialog_);
     lv_label_set_text(ui_text, text.c_str());
     lv_label_set_long_mode(ui_text, LV_LABEL_LONG_WRAP);
-    lv_obj_set_width(ui_text, 380);
+    lv_obj_set_width(ui_text, LV_SIZE_CONTENT);
     lv_obj_set_style_text_font(ui_text, FontManager::get_font(22), 0);
     lv_obj_set_style_pad_top(ui_text, title.empty() ? 34 : 20, 0);
     lv_obj_set_style_pad_bottom(ui_text, 34, 0);
+    lv_obj_set_style_max_height(ui_text, 300, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_max_width(ui_text, 380, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     // 按钮
     if (is_dual_button) {
@@ -159,7 +162,8 @@ void Dialog::close_animation() {
     lv_anim_t a_dialog;
     lv_anim_init(&a_dialog);
     lv_anim_set_var(&a_dialog, alert_dialog_);
-    lv_anim_set_values(&a_dialog, anim_end_y_, anim_start_y_);
+    // printf("AlertDialog y: %d\n", lv_obj_get_style_y(alert_dialog_, 0));
+    lv_anim_set_values(&a_dialog, lv_obj_get_style_y(alert_dialog_, 0), anim_start_y_);
     lv_anim_set_time(&a_dialog, 150);
     lv_anim_set_path_cb(&a_dialog, lv_anim_path_ease_out);
     lv_anim_set_exec_cb(&a_dialog, [](void* var, int32_t v) {
