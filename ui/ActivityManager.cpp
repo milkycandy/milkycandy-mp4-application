@@ -139,7 +139,7 @@ void ActivityManager::enableGlobalSwipe() {
             if (!SwipeGesture::state.pressedLast) {
                 manager.handleSwipeStart(currentPoint);
             }
-            manager.handleSwipeMove(currentPoint, SwipeGesture::state.startPoint);
+            manager.handleSwipeMove(currentPoint, SwipeGesture::state.startPoint, indev);
         } else if (SwipeGesture::state.isSwiping) {
             manager.handleSwipeEnd(SwipeGesture::state.startPoint);
         }
@@ -153,9 +153,11 @@ void ActivityManager::handleSwipeStart(const lv_point_t& point) {
     SwipeGesture::state.isSwiping = false;
 }
 
-void ActivityManager::handleSwipeMove(const lv_point_t& point, const lv_point_t& startPoint) {
+void ActivityManager::handleSwipeMove(const lv_point_t& point, const lv_point_t& startPoint, lv_indev_t* indev) {
     if (!SwipeGesture::state.isSwiping && shouldStartSwipe(point, startPoint)) {
         SwipeGesture::state.isSwiping = true;
+
+        lv_indev_wait_release(indev);
         
         Activity* currentActivity = activityStack.back();
         Activity* previousActivity = activityStack[activityStack.size() - 2];
@@ -193,6 +195,7 @@ void ActivityManager::handleSwipeEnd(const lv_point_t& startPoint) {
         if (!activityStack.empty()) {
             activityStack.back()->onResume();
         }
+        
     } else {
         // 滑动失败，弹回原位
         Activity* previousActivity = activityStack[activityStack.size() - 2];

@@ -28,7 +28,7 @@ private:
     
     // 滑动手势辅助函数
     void handleSwipeStart(const lv_point_t& point);
-    void handleSwipeMove(const lv_point_t& point, const lv_point_t& startPoint);
+    void handleSwipeMove(const lv_point_t& point, const lv_point_t& startPoint, lv_indev_t* indev);
     void handleSwipeEnd(const lv_point_t& startPoint);
     bool shouldStartSwipe(const lv_point_t& current, const lv_point_t& start) const;
 
