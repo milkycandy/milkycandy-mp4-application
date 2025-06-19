@@ -1,11 +1,12 @@
 #include <lvgl.h>
-#include "src/drivers/display/drm/lv_linux_drm.h"
-#include "src/drivers/evdev/lv_evdev.h"
+// #include "src/drivers/display/drm/lv_linux_drm.h"
+// #include "src/drivers/evdev/lv_evdev.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <pthread.h>
 #include <time.h>
 
+#include "ui/managers/ScreenManager.h"
 #include "ui/ActivityManager.h"
 #include "ui/HomeActivity.h"
 #include "ui/MusicActivity.h"
@@ -39,18 +40,7 @@ int main(void)
     pthread_t tick_th;
     pthread_create(&tick_th, NULL, tickThread, NULL);
 
-    // 初始化 DRM 显示
-    lv_display_t * disp = lv_drm_disp_create(0);
-    if (!disp) {
-        fprintf(stderr, "Failed to create DRM display\n");
-        return 1;
-    }
-
-    // 初始化输入设备
-    lv_indev_t * indev = lv_evdev_create(LV_INDEV_TYPE_POINTER, "/dev/input/event0");
-
-    lv_timer_t * t = lv_indev_get_read_timer(indev);
-    lv_timer_set_period(t, 5);
+    ScreenManager::getInstance().init(ScreenRotation::ROTATION_0, "/dev/input/event0");
 
     StyleManager::init();
 
@@ -63,6 +53,21 @@ int main(void)
     
     manager.startActivity(new HomeActivity(&manager));
     manager.enableGlobalSwipe();
+
+
+    lv_timer_create([](lv_timer_t* t){
+         static int rotation_angle_index = -1;
+         ScreenRotation rotations[] = {
+             ScreenRotation::ROTATION_0,
+             ScreenRotation::ROTATION_90,
+             ScreenRotation::ROTATION_270,
+             ScreenRotation::ROTATION_180
+         };
+         rotation_angle_index = (rotation_angle_index + 1) % 4;
+         printf("rotation_angle_index: %d\n", rotation_angle_index);
+         ScreenManager::getInstance().setRotation(rotations[rotation_angle_index]);
+         printf("Screen rotation changed!\n");
+    }, 2000, nullptr);
 
     // 主循环
     while (1) {
