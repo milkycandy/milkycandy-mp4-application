@@ -10,8 +10,8 @@
 #include "ui/ActivityManager.h"
 #include "ui/HomeActivity.h"
 #include "ui/MusicActivity.h"
-#include "ui/fonts/FontManager.h"
-#include "ui/styles/StyleManager.h"
+#include "ui/managers/FontManager.h"
+#include "ui/managers/StyleManager.h"
 // #include "ui/ui.h"
 
 // 精准的 1ms LVGL tick 定时器
@@ -55,19 +55,19 @@ int main(void)
     manager.enableGlobalSwipe();
 
 
-    lv_timer_create([](lv_timer_t* t){
-         static int rotation_angle_index = -1;
-         ScreenRotation rotations[] = {
-             ScreenRotation::ROTATION_0,
-             ScreenRotation::ROTATION_90,
-             ScreenRotation::ROTATION_270,
-             ScreenRotation::ROTATION_180
-         };
-         rotation_angle_index = (rotation_angle_index + 1) % 4;
-         printf("rotation_angle_index: %d\n", rotation_angle_index);
-         ScreenManager::getInstance().setRotation(rotations[rotation_angle_index]);
-         printf("Screen rotation changed!\n");
-    }, 2000, nullptr);
+    // lv_timer_create([](lv_timer_t* t){
+    //      static int rotation_angle_index = -1;
+    //      ScreenRotation rotations[] = {
+    //          ScreenRotation::ROTATION_0,
+    //          ScreenRotation::ROTATION_90,
+    //          ScreenRotation::ROTATION_270,
+    //          ScreenRotation::ROTATION_180
+    //      };
+    //      rotation_angle_index = (rotation_angle_index + 1) % 4;
+    //      printf("rotation_angle_index: %d\n", rotation_angle_index);
+    //      ScreenManager::getInstance().setRotation(rotations[rotation_angle_index]);
+    //      printf("Screen rotation changed!\n");
+    // }, 2000, nullptr);
 
     // 主循环
     while (1) {

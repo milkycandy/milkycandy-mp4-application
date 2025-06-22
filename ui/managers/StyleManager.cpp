@@ -1,5 +1,5 @@
 #include "StyleManager.h"
-#include "../fonts/FontManager.h"
+#include "../managers/FontManager.h"
 
 // 静态成员定义
 lv_style_t StyleManager::defaultTextStyle;

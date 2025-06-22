@@ -1,5 +1,5 @@
 #include "ScreenManager.h"
-#include "../styles/StyleManager.h"
+#include "../managers/StyleManager.h"
 #include "src/drivers/display/drm/lv_linux_drm.h"
 #include "src/drivers/evdev/lv_evdev.h"
 #include <cstdio>

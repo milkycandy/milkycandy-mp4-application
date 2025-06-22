@@ -1,7 +1,7 @@
 #include "HomeActivity.h"
 #include "ActivityManager.h"
 #include "MusicActivity.h"
-#include "styles/StyleManager.h"
+#include "managers/StyleManager.h"
 #include "widgets/Toast.h"
 #include "widgets/Dialog.h"
 #include "lvgl.h"

@@ -1,5 +1,5 @@
 #include "Dialog.h"
-#include "../fonts/FontManager.h"
+#include "../managers/FontManager.h"
 
 void Dialog::showSingleButton(const std::string& title, const std::string& text, const std::function<void()>& positive_cb, const std::string& positive_text) {
     new Dialog(title, text, false, positive_cb, nullptr, positive_text, "");
