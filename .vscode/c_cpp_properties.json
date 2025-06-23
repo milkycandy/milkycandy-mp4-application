@@ -1,0 +1,29 @@
+{
+    "configurations": [
+        {
+            "name": "Rockchip_RK3506",
+            "compilerPath": "/root/Lyra-sdk/buildroot/output/rockchip_rk3506_luckfox/host/bin/arm-buildroot-linux-gnueabihf-g++",
+
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/root/Lyra-sdk/buildroot/output/rockchip_rk3506_luckfox/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include",
+                "/root/Lyra-sdk/buildroot/output/rockchip_rk3506_luckfox/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/lvgl",
+                "/root/Lyra-sdk/buildroot/output/rockchip_rk3506_luckfox/build/lvgl-9.1"
+            ],
+
+            "defines": [
+                "_LARGEFILE_SOURCE",
+                "_LARGEFILE64_SOURCE",
+                "_FILE_OFFSET_BITS=64",
+                "_TIME_BITS=64",
+                "_FORTIFY_SOURCE=1"
+            ],
+            
+            "cppStandard": "c++17",
+            "cStandard": "c11",
+
+            "intelliSenseMode": "linux-gcc-arm"
+        }
+    ],
+    "version": 4
+}

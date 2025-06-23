@@ -27,8 +27,8 @@ public:
 
     /**
      * @brief 设置屏幕旋转
-     * @param rotation 新的旋转角度
-     * @note 此操作会销毁并重新创建显示设备，可能会导致短暂的黑屏。
+     * @param rotation 新的旋转角度(0, 90, 180, 270)
+     * @note 此操作可能会导致短暂的黑屏。
      * 之后会自动更新触摸输入设备的映射关系。
      */
     void setRotation(ScreenRotation rotation);

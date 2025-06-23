@@ -22,9 +22,13 @@ void HomeActivity::onCreate() {
     lv_obj_add_event_cb(btn, go_to_music_event_cb, LV_EVENT_CLICKED, nullptr);
 
     lv_obj_t* btn_label = lv_label_create(btn);
-    lv_label_set_text(btn_label, "显示Toast");
+    lv_label_set_text(btn_label, "打开新页面");
     lv_obj_center(btn_label);
     lv_obj_add_style(btn_label, StyleManager::get_centered_text_style(), 0);
+
+    lv_obj_t * img = lv_image_create(root);
+    lv_image_set_src(img, "S:/root/首先要选择做什么梦.png");
+    lv_obj_center(img);
 }
 
 void HomeActivity::onResume() {
