@@ -5,6 +5,9 @@
 #include "../widgets/Toast.h"
 #include "lvgl.h"
 
+LV_IMG_DECLARE(folder_66px_blue);
+LV_IMG_DECLARE(movie_66px_grey);
+
 // 构造函数
 VideoActivity::VideoActivity(ActivityManager* manager, std::string path)
     : Activity(manager), currentPath_(std::move(path)) {}
@@ -80,6 +83,7 @@ void VideoActivity::createListItem(lv_obj_t* parent, const FileEntry& entry, int
     lv_obj_remove_style_all(item);
     lv_obj_add_style(item, StyleManager::getFileListItemStyle(is_odd), 0);
     lv_obj_add_flag(item, LV_OBJ_FLAG_CLICKABLE);
+    lv_obj_remove_flag(item, LV_OBJ_FLAG_SCROLLABLE);
 
     // 存储数据
     lv_obj_set_user_data(item, (void*)&entry);
@@ -88,9 +92,9 @@ void VideoActivity::createListItem(lv_obj_t* parent, const FileEntry& entry, int
     // 图标
     lv_obj_t* icon = lv_image_create(item);
     if (entry.isDirectory) {
-        lv_image_set_src(icon, "S:/usr/share/myapp/assets/drawable/folder_66px_blue.bin");
+        lv_image_set_src(icon, &folder_66px_blue);
     } else {
-        lv_image_set_src(icon, "S:/usr/share/myapp/assets/drawable/movie_66px_grey.bin");
+        lv_image_set_src(icon, &movie_66px_grey);
     }
     lv_obj_set_align(icon, LV_ALIGN_LEFT_MID);
 
@@ -99,7 +103,7 @@ void VideoActivity::createListItem(lv_obj_t* parent, const FileEntry& entry, int
     lv_label_set_text(label, entry.name.c_str());
     lv_obj_add_style(label, StyleManager::getFileListLabelStyle(), 0);
     lv_obj_set_align(label, LV_ALIGN_LEFT_MID);
-    lv_obj_set_style_pad_left(label, 74, 0); // 根据你的图标大小调整
+    lv_obj_set_style_pad_left(label, 74, 0);
 }
 
 
@@ -110,7 +114,7 @@ void VideoActivity::navigateToDirectory(const std::string& path) {
 
 void VideoActivity::navigateToVideoPlayer(const std::string& path) {
     Toast::show("即将播放: " + path);
-    // 以后在这里启动播放器
+    // 启动播放器
     // manager->startActivity(new VideoPlayerActivity(manager, path));
 }
 

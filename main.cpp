@@ -54,7 +54,7 @@ int main(void) {
     while (1) {
         lv_timer_handler();
 
-        usleep(1000);  // 主线程休眠 1ms
+        usleep(200);  // 主线程休眠 0.2ms
     }
 
     return 0;

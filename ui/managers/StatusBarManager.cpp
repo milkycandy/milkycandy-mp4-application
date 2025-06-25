@@ -4,6 +4,9 @@
 #include "StatusBarManager.h"
 #include "FontManager.h"
 
+LV_IMG_DECLARE(statusbar_bluetooth);
+LV_IMG_DECLARE(statusbar_battery_70);
+
 StatusBarManager& StatusBarManager::getInstance() {
     static StatusBarManager instance;
     return instance;
@@ -18,7 +21,7 @@ void StatusBarManager::init() {
     lv_obj_remove_flag(ui_StatusBar, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);
 
     ui_ImageBluetooth = lv_image_create(ui_StatusBar);
-    lv_image_set_src(ui_ImageBluetooth, "S:/usr/share/myapp/assets/drawable/statusbar_bluetooth.bin");
+    lv_image_set_src(ui_ImageBluetooth, &statusbar_bluetooth);
     lv_obj_set_width(ui_ImageBluetooth, LV_SIZE_CONTENT);   /// 40
     lv_obj_set_height(ui_ImageBluetooth, LV_SIZE_CONTENT);  /// 40
     lv_obj_set_x(ui_ImageBluetooth, 3);
@@ -37,7 +40,7 @@ void StatusBarManager::init() {
     lv_obj_set_style_text_font(ui_LabelTime, FontManager::getFont(28), LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_ImageBattery = lv_image_create(ui_StatusBar);
-    lv_image_set_src(ui_ImageBattery, "S:/usr/share/myapp/assets/drawable/statusbar_battery_70.bin");
+    lv_image_set_src(ui_ImageBattery, &statusbar_battery_70);
     lv_obj_set_width(ui_ImageBattery, LV_SIZE_CONTENT);   /// 28
     lv_obj_set_height(ui_ImageBattery, LV_SIZE_CONTENT);  /// 28
     lv_obj_set_x(ui_ImageBattery, -6);

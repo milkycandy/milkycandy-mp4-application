@@ -8,13 +8,18 @@
 #include "../widgets/Dialog.h"
 #include "../widgets/Toast.h"
 
+LV_IMG_DECLARE(wallpaper);
+LV_IMG_DECLARE(launcher_music);
+LV_IMG_DECLARE(launcher_video);
+LV_IMG_DECLARE(launcher_settings);
+
+
 void LauncherActivity::onCreate() {
-    // lv_obj_set_style_bg_color(root, lv_palette_main(LV_PALETTE_BLUE), 0);
     enableEnterAnimation = false;  // 关闭进入动画
 
-    lv_obj_set_style_bg_image_src(root, "S:/usr/share/myapp/assets/drawable/wallpaper.bin", 0);
-    // lv_obj_set_style_bg_image_recolor(root, lv_color_hex(0xA440FF), 0);
-    // lv_obj_set_style_bg_image_recolor_opa(root, 66, 0);
+    lv_obj_set_style_bg_image_src(root, &wallpaper, 0);
+    lv_obj_set_style_bg_image_recolor(root, lv_color_hex(0xA440FF), 0);
+    lv_obj_set_style_bg_image_recolor_opa(root, 66, 0);
 
     lv_obj_t* ui_HomePage = lv_obj_create(root);
     lv_obj_remove_style_all(ui_HomePage);
@@ -60,9 +65,9 @@ void LauncherActivity::onCreate() {
     };
 
     // 创建具体条目
-    lv_obj_t* ui_ContainerMusic = createTile(ui_HomePage, "S:/usr/share/myapp/assets/drawable/launcher_music.bin", "音乐", go_to_music_event_cb);
-    lv_obj_t* ui_ContainerVideo = createTile(ui_HomePage, "S:/usr/share/myapp/assets/drawable/launcher_video.bin", "视频", launchVideoListActivity);
-    lv_obj_t* ui_ContainerSettings = createTile(ui_HomePage, "S:/usr/share/myapp/assets/drawable/launcher_settings.bin", "设置", nullptr);
+    lv_obj_t* ui_ContainerMusic = createTile(ui_HomePage, &launcher_music, "音乐", go_to_music_event_cb);
+    lv_obj_t* ui_ContainerVideo = createTile(ui_HomePage, &launcher_video, "视频", launchVideoListActivity);
+    lv_obj_t* ui_ContainerSettings = createTile(ui_HomePage, &launcher_settings, "设置", nullptr);
 
     // 占位容器（无图、无标签）
     lv_obj_t* ui_ContainerPlaceHolder = lv_obj_create(ui_HomePage);

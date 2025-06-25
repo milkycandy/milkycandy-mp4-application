@@ -18,7 +18,7 @@ void ScreenManager::init(ScreenRotation rotation, const char* indev_path) {
 
     indev_ = lv_evdev_create(LV_INDEV_TYPE_POINTER, indev_path);
     lv_timer_t * t = lv_indev_get_read_timer(indev_);
-    lv_timer_set_period(t, 5);
+    lv_timer_set_period(t, 16);
 
     configureInputDevice(rotation);
     currentRotation_ = rotation;
