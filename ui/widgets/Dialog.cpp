@@ -62,14 +62,14 @@ void Dialog::create_ui(lv_obj_t* parent, const std::string& title, const std::st
 
     lv_obj_t* ui_title = lv_label_create(alert_dialog_);
     lv_label_set_text(ui_title, title.c_str());
-    lv_obj_set_style_text_font(ui_title, FontManager::get_font(22), 0);
+    lv_obj_set_style_text_font(ui_title, FontManager::getFont(22), 0);
     lv_obj_set_style_pad_top(ui_title, 26, 0);
     
     lv_obj_t* ui_text = lv_label_create(alert_dialog_);
     lv_label_set_text(ui_text, text.c_str());
     lv_label_set_long_mode(ui_text, LV_LABEL_LONG_WRAP);
     lv_obj_set_width(ui_text, LV_SIZE_CONTENT);
-    lv_obj_set_style_text_font(ui_text, FontManager::get_font(22), 0);
+    lv_obj_set_style_text_font(ui_text, FontManager::getFont(22), 0);
     lv_obj_set_style_pad_top(ui_text, title.empty() ? 34 : 20, 0);
     lv_obj_set_style_pad_bottom(ui_text, 34, 0);
     lv_obj_set_style_max_height(ui_text, 300, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -92,7 +92,7 @@ void Dialog::create_ui(lv_obj_t* parent, const std::string& title, const std::st
         lv_obj_t* label_neg = lv_label_create(btn_negative_);
         lv_label_set_text(label_neg, negative_text.c_str());
         lv_obj_set_style_text_color(label_neg, lv_color_hex(0x181818), 0);
-        lv_obj_set_style_text_font(label_neg, FontManager::get_font(22), 0);
+        lv_obj_set_style_text_font(label_neg, FontManager::getFont(22), 0);
         lv_obj_center(label_neg);
         
         btn_positive_ = lv_button_create(btn_container);
@@ -103,7 +103,7 @@ void Dialog::create_ui(lv_obj_t* parent, const std::string& title, const std::st
         lv_obj_add_event_cb(btn_positive_, button_event_cb, LV_EVENT_CLICKED, this);
         lv_obj_t* label_pos = lv_label_create(btn_positive_);
         lv_label_set_text(label_pos, positive_text.c_str());
-        lv_obj_set_style_text_font(label_pos, FontManager::get_font(22), 0);
+        lv_obj_set_style_text_font(label_pos, FontManager::getFont(22), 0);
         lv_obj_center(label_pos);
     } else {
         btn_positive_ = lv_button_create(alert_dialog_);
@@ -115,7 +115,7 @@ void Dialog::create_ui(lv_obj_t* parent, const std::string& title, const std::st
         lv_obj_add_event_cb(btn_positive_, button_event_cb, LV_EVENT_CLICKED, this);
         lv_obj_t* label_pos = lv_label_create(btn_positive_);
         lv_label_set_text(label_pos, positive_text.c_str());
-        lv_obj_set_style_text_font(label_pos, FontManager::get_font(22), 0);
+        lv_obj_set_style_text_font(label_pos, FontManager::getFont(22), 0);
         lv_obj_center(label_pos);
     }
 }

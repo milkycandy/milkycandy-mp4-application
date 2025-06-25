@@ -1,13 +1,13 @@
 #pragma once
 
-#include "lvgl.h"
-#include <string>
 #include <functional>
-#include "../ActivityManager.h"
+#include <string>
 
-class Dialog
-{
-public:
+#include "../ActivityManager.h"
+#include "lvgl.h"
+
+class Dialog {
+   public:
     /**
      * @brief 显示一个只有一个按钮的对话框（如“确定”）。
      *
@@ -18,11 +18,9 @@ public:
      * @param positive_cb 点击“确定”按钮后的回调函数，可为空
      * @param positive_text “确定”按钮的文本，默认为 "确定"
      */
-    static void showSingleButton(
-        const std::string &title = "提示",
-        const std::string &text = "",
-        const std::function<void()> &positive_cb = nullptr,
-        const std::string &positive_text = "确定");
+    static void showSingleButton(const std::string &title = "提示", const std::string &text = "",
+                                 const std::function<void()> &positive_cb = nullptr,
+                                 const std::string &positive_text = "确定");
 
     /**
      * @brief 显示一个带有“确定”和“取消”两个按钮的对话框。
@@ -36,31 +34,18 @@ public:
      * @param positive_text “确定”按钮的文本，默认为 "确定"
      * @param negative_text “取消”按钮的文本，默认为 "取消"
      */
-    static void showDualButton(
-        const std::string &title = "请确认",
-        const std::string &text = "",
-        const std::function<void()> &positive_cb = nullptr,
-        const std::function<void()> &negative_cb = nullptr,
-        const std::string &positive_text = "确定",
-        const std::string &negative_text = "取消");
+    static void showDualButton(const std::string &title = "请确认", const std::string &text = "",
+                               const std::function<void()> &positive_cb = nullptr,
+                               const std::function<void()> &negative_cb = nullptr,
+                               const std::string &positive_text = "确定", const std::string &negative_text = "取消");
 
-private:
-    Dialog(
-        const std::string &title,
-        const std::string &text,
-        bool is_dual_button,
-        const std::function<void()> &positive_cb,
-        const std::function<void()> &negative_cb,
-        const std::string &positive_text,
-        const std::string &negative_text);
+   private:
+    Dialog(const std::string &title, const std::string &text, bool is_dual_button,
+           const std::function<void()> &positive_cb, const std::function<void()> &negative_cb,
+           const std::string &positive_text, const std::string &negative_text);
 
-    void create_ui(
-        lv_obj_t *parent,
-        const std::string &title,
-        const std::string &text,
-        bool is_dual_button,
-        const std::string &positive_text,
-        const std::string &negative_text);
+    void create_ui(lv_obj_t *parent, const std::string &title, const std::string &text, bool is_dual_button,
+                   const std::string &positive_text, const std::string &negative_text);
 
     ~Dialog() = default;
     void show_animation();

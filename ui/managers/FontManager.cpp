@@ -1,7 +1,7 @@
 #include "FontManager.h"
 #include <stdio.h>
 
-#define FONT_PATH "/root/MiSans-Demibold.ttf"
+#define FONT_PATH "/usr/share/myapp/assets/fonts/MiSans-Demibold.ttf"
 
 std::map<int, lv_font_t*> FontManager::font_map;
 
@@ -18,12 +18,12 @@ void FontManager::init() {
             printf("[ERROR] FontManager: Failed to load font size %d\n", size);
         } else {
             font_map[size] = font;
-            printf("[INFO] FontManager: Loaded font size %d successfully\n", size);
+            // printf("[INFO] FontManager: Loaded font size %d successfully\n", size);
         }
     }
 }
 
-lv_font_t* FontManager::get_font(int size) {
+lv_font_t* FontManager::getFont(int size) {
     auto it = font_map.find(size);
     if (it != font_map.end()) {
         return it->second;
