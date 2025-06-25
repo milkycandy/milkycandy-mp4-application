@@ -2,6 +2,7 @@
 
 #include "../ActivityManager.h"
 #include "MusicActivity.h"
+#include "VideoActivity.h"
 #include "lvgl.h"
 #include "../managers/StyleManager.h"
 #include "../widgets/Dialog.h"
@@ -12,8 +13,8 @@ void LauncherActivity::onCreate() {
     enableEnterAnimation = false;  // 关闭进入动画
 
     lv_obj_set_style_bg_image_src(root, "S:/usr/share/myapp/assets/drawable/wallpaper.bin", 0);
-    lv_obj_set_style_bg_image_recolor(root, lv_color_hex(0xA440FF), 0);
-    lv_obj_set_style_bg_image_recolor_opa(root, 66, 0);
+    // lv_obj_set_style_bg_image_recolor(root, lv_color_hex(0xA440FF), 0);
+    // lv_obj_set_style_bg_image_recolor_opa(root, 66, 0);
 
     lv_obj_t* ui_HomePage = lv_obj_create(root);
     lv_obj_remove_style_all(ui_HomePage);
@@ -27,7 +28,7 @@ void LauncherActivity::onCreate() {
     lv_obj_remove_flag(ui_HomePage, LV_OBJ_FLAG_CLICKABLE);
     lv_obj_set_scroll_dir(ui_HomePage, LV_DIR_VER);
 
-    auto createTile = [](lv_obj_t* parent, const void* imgSrc, const char* labelText) {
+    auto createTile = [](lv_obj_t* parent, const void* imgSrc, const char* labelText, lv_event_cb_t event_cb) {
         lv_obj_t* container = lv_obj_create(parent);
         lv_obj_remove_style_all(container);
         lv_obj_add_style(container, StyleManager::getTileContainerStyle(), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -42,6 +43,10 @@ void LauncherActivity::onCreate() {
         lv_obj_set_align(imgBtn, LV_ALIGN_TOP_MID);
         lv_obj_add_style(imgBtn, StyleManager::getPressedImageButtonStyle(), LV_PART_MAIN | LV_STATE_PRESSED);
 
+        if(event_cb) {
+            lv_obj_add_event_cb(imgBtn, event_cb, LV_EVENT_CLICKED, nullptr);
+        }
+
         lv_obj_t* label = lv_label_create(container);
         lv_obj_set_width(label, LV_SIZE_CONTENT);
         lv_obj_set_height(label, LV_SIZE_CONTENT);
@@ -55,9 +60,9 @@ void LauncherActivity::onCreate() {
     };
 
     // 创建具体条目
-    lv_obj_t* ui_ContainerMusic = createTile(ui_HomePage, "S:/usr/share/myapp/assets/drawable/launcher_music.bin", "音乐");
-    lv_obj_t* ui_ContainerVideo = createTile(ui_HomePage, "S:/usr/share/myapp/assets/drawable/launcher_video.bin", "视频");
-    lv_obj_t* ui_ContainerSettings = createTile(ui_HomePage, "S:/usr/share/myapp/assets/drawable/launcher_settings.bin", "设置");
+    lv_obj_t* ui_ContainerMusic = createTile(ui_HomePage, "S:/usr/share/myapp/assets/drawable/launcher_music.bin", "音乐", go_to_music_event_cb);
+    lv_obj_t* ui_ContainerVideo = createTile(ui_HomePage, "S:/usr/share/myapp/assets/drawable/launcher_video.bin", "视频", launchVideoListActivity);
+    lv_obj_t* ui_ContainerSettings = createTile(ui_HomePage, "S:/usr/share/myapp/assets/drawable/launcher_settings.bin", "设置", nullptr);
 
     // 占位容器（无图、无标签）
     lv_obj_t* ui_ContainerPlaceHolder = lv_obj_create(ui_HomePage);
@@ -103,4 +108,10 @@ void LauncherActivity::go_to_music_event_cb(lv_event_t* e) {
     //     "好捏",
     //     "不要"
     // );
+}
+
+void LauncherActivity::launchVideoListActivity(lv_event_t* e) {
+    ActivityManager& manager = ActivityManager::getInstance();
+    // 启动 VideoActivity 并传入指定的初始路径
+    manager.startActivity(new VideoActivity(&manager, "/root/video/")); 
 }

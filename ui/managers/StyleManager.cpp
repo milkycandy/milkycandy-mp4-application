@@ -7,6 +7,10 @@ lv_style_t StyleManager::tileContainerStyle;
 lv_style_t StyleManager::pressedImageButtonStyle;
 lv_style_t StyleManager::tileLabelStyle;
 
+lv_style_t StyleManager::fileListItemStyle_Odd;
+lv_style_t StyleManager::fileListItemStyle_Even;
+lv_style_t StyleManager::fileListLabelStyle;
+
 void StyleManager::init() {
     FontManager::init();
 
@@ -35,6 +39,29 @@ void StyleManager::init() {
     lv_style_set_text_color(&tileLabelStyle, lv_color_hex(0xFFFFFF));
     lv_style_set_text_opa(&tileLabelStyle, 255);
     lv_style_set_text_font(&tileLabelStyle, FontManager::getFont(28));
+
+    // 列表项通用设置
+    auto init_file_list_item_style = [](lv_style_t* style) {
+        lv_style_set_width(style, lv_pct(100));
+        lv_style_set_height(style, LV_SIZE_CONTENT);
+        lv_style_set_pad_all(style, 6);
+    };
+
+    // 奇数行样式 (白色背景)
+    lv_style_init(&fileListItemStyle_Odd);
+    init_file_list_item_style(&fileListItemStyle_Odd);
+    lv_style_set_bg_color(&fileListItemStyle_Odd, lv_color_hex(0xFFFFFF));
+    lv_style_set_bg_opa(&fileListItemStyle_Odd, 255);
+
+    // 偶数行样式 (灰色背景)
+    lv_style_init(&fileListItemStyle_Even);
+    init_file_list_item_style(&fileListItemStyle_Even);
+    lv_style_set_bg_color(&fileListItemStyle_Even, lv_color_hex(0xF4F5F5));
+    lv_style_set_bg_opa(&fileListItemStyle_Even, 255);
+
+    // 文件列表中的标签样式
+    lv_style_init(&fileListLabelStyle);
+    lv_style_set_text_font(&fileListLabelStyle, FontManager::getFont(26));
 }
 
 lv_style_t* StyleManager::getHomepageStyle() {
@@ -51,4 +78,12 @@ lv_style_t* StyleManager::getPressedImageButtonStyle() {
 
 lv_style_t* StyleManager::getTileLabelStyle() {
     return &tileLabelStyle;
+}
+
+lv_style_t* StyleManager::getFileListItemStyle(bool is_odd) {
+    return is_odd ? &fileListItemStyle_Odd : &fileListItemStyle_Even;
+}
+
+lv_style_t* StyleManager::getFileListLabelStyle() {
+    return &fileListLabelStyle;
 }
