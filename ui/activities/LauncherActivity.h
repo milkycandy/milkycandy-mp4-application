@@ -8,6 +8,7 @@ public:
     void onCreate() override;
     void onResume() override;
     void onPause() override;
+    void onDestroy() override;
 
 private:
     static void go_to_music_event_cb(lv_event_t* e);

@@ -75,7 +75,9 @@ void LauncherActivity::onPause() {
     LV_LOG_USER("LauncherActivity onPause");
 }
 
-// 一般情况下这个 activity 不会出现onDestory
+void LauncherActivity::onDestroy() {
+    // TODO: 在设备关机时销毁所有活动
+}
 
 void LauncherActivity::go_to_music_event_cb(lv_event_t* e) {
     ActivityManager& manager = ActivityManager::getInstance();
