@@ -2,7 +2,7 @@
 
 #include "../ActivityManager.h"
 #include "MusicActivity.h"
-#include "VideoActivity.h"
+#include "VideoListActivity.h"
 #include "lvgl.h"
 #include "../managers/StyleManager.h"
 #include "../widgets/Dialog.h"
@@ -18,8 +18,8 @@ void LauncherActivity::onCreate() {
     enableEnterAnimation = false;  // 关闭进入动画
 
     lv_obj_set_style_bg_image_src(root, &wallpaper, 0);
-    lv_obj_set_style_bg_image_recolor(root, lv_color_hex(0xA440FF), 0);
-    lv_obj_set_style_bg_image_recolor_opa(root, 66, 0);
+    // lv_obj_set_style_bg_image_recolor(root, lv_color_hex(0xA440FF), 0);
+    // lv_obj_set_style_bg_image_recolor_opa(root, 66, 0);
 
     lv_obj_t* ui_HomePage = lv_obj_create(root);
     lv_obj_remove_style_all(ui_HomePage);
@@ -117,6 +117,6 @@ void LauncherActivity::go_to_music_event_cb(lv_event_t* e) {
 
 void LauncherActivity::launchVideoListActivity(lv_event_t* e) {
     ActivityManager& manager = ActivityManager::getInstance();
-    // 启动 VideoActivity 并传入指定的初始路径
-    manager.startActivity(new VideoActivity(&manager, "/root/video/")); 
+    // 启动 VideoListActivity 并传入指定的初始路径
+    manager.startActivity(new VideoListActivity(&manager, "/root/video")); 
 }

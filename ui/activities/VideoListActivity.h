@@ -6,11 +6,11 @@
 #include <string>
 #include <vector>
 
-class VideoActivity : public Activity {
+class VideoListActivity : public Activity {
 public:
     // 构造函数接收路径
-    VideoActivity(ActivityManager* manager, std::string path);
-    ~VideoActivity() override;
+    VideoListActivity(ActivityManager* manager, std::string path);
+    ~VideoListActivity() override;
 
     // 给 Presenter 调用
     void displayFileList(const std::vector<FileEntry>& entries, int folderCount, int fileCount);

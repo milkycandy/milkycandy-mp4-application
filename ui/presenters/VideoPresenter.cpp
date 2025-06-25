@@ -1,7 +1,7 @@
 #include "VideoPresenter.h"
-#include "../activities/VideoActivity.h"
+#include "../activities/VideoListActivity.h"
 
-VideoPresenter::VideoPresenter(VideoActivity* view) : view_(view) {}
+VideoPresenter::VideoPresenter(VideoListActivity* view) : view_(view) {}
 
 void VideoPresenter::loadEntries(const std::string& path) {
     if (!view_) return;

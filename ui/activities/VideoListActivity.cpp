@@ -1,4 +1,4 @@
-#include "VideoActivity.h"
+#include "VideoListActivity.h"
 #include "../ActivityManager.h"
 #include "../managers/FontManager.h"
 #include "../managers/StyleManager.h"
@@ -9,15 +9,15 @@ LV_IMG_DECLARE(folder_66px_blue);
 LV_IMG_DECLARE(movie_66px_grey);
 
 // 构造函数
-VideoActivity::VideoActivity(ActivityManager* manager, std::string path)
+VideoListActivity::VideoListActivity(ActivityManager* manager, std::string path)
     : Activity(manager), currentPath_(std::move(path)) {}
 
 // 析构函数
-VideoActivity::~VideoActivity() {
+VideoListActivity::~VideoListActivity() {
     // presenter_ 由 unique_ptr 自动管理
 }
 
-void VideoActivity::onCreate() {
+void VideoListActivity::onCreate() {
     presenter_ = std::make_unique<VideoPresenter>(this);
 
     listContainer_ = lv_obj_create(root);
@@ -33,15 +33,16 @@ void VideoActivity::onCreate() {
     presenter_->loadEntries(currentPath_);
 }
 
-void VideoActivity::onDestroy() {
+void VideoListActivity::onDestroy() {
     // 释放为列表项分配的所有内存
     for (auto* data : listEntryData_) {
         delete data;
     }
     listEntryData_.clear();
+    LV_LOG_USER("VideoListActivity::onDestroy()");
 }
 
-void VideoActivity::displayFileList(const std::vector<FileEntry>& entries, int folderCount, int fileCount) {
+void VideoListActivity::displayFileList(const std::vector<FileEntry>& entries, int folderCount, int fileCount) {
     lv_obj_clean(listContainer_); // 清空旧列表
     // 释放旧的内存
     for (auto* data : listEntryData_) {
@@ -77,7 +78,7 @@ void VideoActivity::displayFileList(const std::vector<FileEntry>& entries, int f
 }
 
 // 创建单个列表项
-void VideoActivity::createListItem(lv_obj_t* parent, const FileEntry& entry, int index) {
+void VideoListActivity::createListItem(lv_obj_t* parent, const FileEntry& entry, int index) {
     bool is_odd = index % 2 == 0;
     lv_obj_t* item = lv_obj_create(parent);
     lv_obj_remove_style_all(item);
@@ -108,19 +109,19 @@ void VideoActivity::createListItem(lv_obj_t* parent, const FileEntry& entry, int
 
 
 // --- Presenter调用的导航方法 ---
-void VideoActivity::navigateToDirectory(const std::string& path) {
-    manager->startActivity(new VideoActivity(manager, path));
+void VideoListActivity::navigateToDirectory(const std::string& path) {
+    manager->startActivity(new VideoListActivity(manager, path));
 }
 
-void VideoActivity::navigateToVideoPlayer(const std::string& path) {
+void VideoListActivity::navigateToVideoPlayer(const std::string& path) {
     Toast::show("即将播放: " + path);
     // 启动播放器
     // manager->startActivity(new VideoPlayerActivity(manager, path));
 }
 
 // --- 静态事件回调 ---
-void VideoActivity::list_item_event_cb(lv_event_t* e) {
-    auto* activity = static_cast<VideoActivity*>(lv_event_get_user_data(e));
+void VideoListActivity::list_item_event_cb(lv_event_t* e) {
+    auto* activity = static_cast<VideoListActivity*>(lv_event_get_user_data(e));
     lv_obj_t* target = static_cast<lv_obj_t*>(lv_event_get_target(e));
     auto* entry = static_cast<FileEntry*>(lv_obj_get_user_data(target));
 

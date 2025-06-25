@@ -4,16 +4,16 @@
 #include <string>
 
 // 前向声明，避免头文件循环引用
-class VideoActivity;
+class VideoListActivity;
 
 class VideoPresenter {
 public:
-    VideoPresenter(VideoActivity* view);
+    VideoPresenter(VideoListActivity* view);
 
     void loadEntries(const std::string& path);
     void onEntryClicked(const FileEntry& entry);
 
 private:
-    VideoActivity* view_; // 指向 View 的指针
+    VideoListActivity* view_; // 指向 View 的指针
     FileSystemRepository repository_;
 };
