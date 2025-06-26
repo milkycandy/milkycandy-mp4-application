@@ -8,7 +8,7 @@
 #include "ui/activities/LauncherActivity.h"
 #include "ui/activities/MusicActivity.h"
 #include "ui/managers/FontManager.h"
-#include "ui/managers/ScreenManager.h"
+#include "ui/managers/DisplayManager.h"
 #include "ui/managers/StatusBarManager.h"
 #include "ui/managers/StyleManager.h"
 
@@ -37,7 +37,7 @@ int main(void) {
     pthread_t tick_th;
     pthread_create(&tick_th, NULL, tickThread, NULL);
 
-    ScreenManager::getInstance().init(ScreenRotation::ROTATION_0, "/dev/input/event0");
+    DisplayManager::getInstance().init(ScreenRotation::ROTATION_0, "/dev/input/event0");
 
     StyleManager::init();
 

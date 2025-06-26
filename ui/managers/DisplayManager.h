@@ -9,14 +9,14 @@ enum class ScreenRotation {
     ROTATION_270 = 270
 };
 
-class ScreenManager {
+class DisplayManager {
 public:
     // 获取单例实例
-    static ScreenManager& getInstance();
+    static DisplayManager& getInstance();
 
     // 禁止拷贝和赋值
-    ScreenManager(const ScreenManager&) = delete;
-    ScreenManager& operator=(const ScreenManager&) = delete;
+    DisplayManager(const DisplayManager&) = delete;
+    DisplayManager& operator=(const DisplayManager&) = delete;
 
     /**
      * @brief 初始化屏幕和输入设备
@@ -52,8 +52,8 @@ public:
     lv_indev_t* getInputDevice() const;
 
 private:
-    ScreenManager() = default;
-    ~ScreenManager() = default;
+    DisplayManager() = default;
+    ~DisplayManager() = default;
 
     void configureInputDevice(ScreenRotation rotation);
 

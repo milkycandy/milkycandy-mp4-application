@@ -1,15 +1,15 @@
-#include "ScreenManager.h"
+#include "DisplayManager.h"
 #include "../managers/StyleManager.h"
 #include "src/drivers/display/drm/lv_linux_drm.h"
 #include "src/drivers/evdev/lv_evdev.h"
 #include <cstdio>
 
-ScreenManager& ScreenManager::getInstance() {
-    static ScreenManager instance;
+DisplayManager& DisplayManager::getInstance() {
+    static DisplayManager instance;
     return instance;
 }
 
-void ScreenManager::init(ScreenRotation rotation, const char* indev_path) {
+void DisplayManager::init(ScreenRotation rotation, const char* indev_path) {
     disp_ = lv_drm_disp_create(static_cast<int>(rotation));
     if (!disp_) {
         fprintf(stderr, "Failed to create DRM display\n");
@@ -24,7 +24,7 @@ void ScreenManager::init(ScreenRotation rotation, const char* indev_path) {
     currentRotation_ = rotation;
 }
 
-void ScreenManager::setRotation(ScreenRotation rotation) {
+void DisplayManager::setRotation(ScreenRotation rotation) {
 
     printf("Rotating display to %d\n", static_cast<int>(rotation));
     lv_drm_disp_rotate(disp_, static_cast<int>(rotation));
@@ -44,7 +44,7 @@ void ScreenManager::setRotation(ScreenRotation rotation) {
     // lv_obj_invalidate(lv_screen_active());
 }
 
-void ScreenManager::configureInputDevice(ScreenRotation rotation) {
+void DisplayManager::configureInputDevice(ScreenRotation rotation) {
     if (!indev_) return;
 
     switch (rotation) {
@@ -74,14 +74,14 @@ void ScreenManager::configureInputDevice(ScreenRotation rotation) {
     }
 }
 
-ScreenRotation ScreenManager::getCurrentRotation() const {
+ScreenRotation DisplayManager::getCurrentRotation() const {
     return currentRotation_;
 }
 
-lv_display_t* ScreenManager::getDisplay() const {
+lv_display_t* DisplayManager::getDisplay() const {
     return disp_;
 }
 
-lv_indev_t* ScreenManager::getInputDevice() const {
+lv_indev_t* DisplayManager::getInputDevice() const {
     return indev_;
 }
