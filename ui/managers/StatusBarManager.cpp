@@ -51,3 +51,15 @@ void StatusBarManager::init() {
     lv_obj_set_style_image_recolor(ui_ImageBattery, lv_color_hex(0x212121), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_image_recolor_opa(ui_ImageBattery, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 }
+
+void StatusBarManager::show() {
+    if (ui_StatusBar) {
+        lv_obj_clear_flag(ui_StatusBar, LV_OBJ_FLAG_HIDDEN);
+    }
+}
+
+void StatusBarManager::hide() {
+    if (ui_StatusBar) {
+        lv_obj_add_flag(ui_StatusBar, LV_OBJ_FLAG_HIDDEN);
+    }
+}

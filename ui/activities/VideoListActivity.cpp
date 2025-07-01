@@ -1,4 +1,5 @@
 #include "VideoListActivity.h"
+#include "VideoPlayerActivity.h"
 #include "../ActivityManager.h"
 #include "../managers/FontManager.h"
 #include "../managers/StyleManager.h"
@@ -116,7 +117,7 @@ void VideoListActivity::navigateToDirectory(const std::string& path) {
 void VideoListActivity::navigateToVideoPlayer(const std::string& path) {
     Toast::show("即将播放: " + path);
     // 启动播放器
-    // manager->startActivity(new VideoPlayerActivity(manager, path));
+    manager->startActivity(new VideoPlayerActivity(manager, path));
 }
 
 // --- 静态事件回调 ---

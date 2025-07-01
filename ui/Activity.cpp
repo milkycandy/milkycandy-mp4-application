@@ -2,7 +2,7 @@
 #include "lvgl.h"
 
 Activity::Activity(ActivityManager* manager)
-    : manager(manager), root(nullptr), swipeToReturnEnabled(true) {
+    : manager(manager) {
 }
 
 void Activity::onResume() {

@@ -27,8 +27,8 @@ public:
     void destroy();
 
 public:
-    lv_obj_t* root;                 // 每个Activity的根LVGL对象
-    bool swipeToReturnEnabled;      // 是否允许右滑返回
+    lv_obj_t* root = nullptr;                 // 每个Activity的根LVGL对象
+    bool swipeToReturnEnabled = true;      // 是否允许右滑返回
     bool enableEnterAnimation = true;
 
 protected:

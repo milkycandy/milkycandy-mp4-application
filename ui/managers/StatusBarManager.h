@@ -11,6 +11,8 @@ public:
     static StatusBarManager& getInstance();
 
     void init();
+    void show();  // 新增：显示状态栏
+    void hide();  // 新增：隐藏状态栏
 
 private:
     StatusBarManager() = default;
@@ -22,7 +24,6 @@ private:
     lv_obj_t* ui_ImageBluetooth = nullptr;
     lv_obj_t* ui_LabelTime = nullptr;
     lv_obj_t* ui_ImageBattery = nullptr;
-
 };
 
 #endif
