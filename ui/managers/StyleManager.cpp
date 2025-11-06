@@ -12,7 +12,6 @@ lv_style_t StyleManager::fileListItemStyle_Even;
 lv_style_t StyleManager::fileListLabelStyle;
 
 void StyleManager::init() {
-    FontManager::init();
 
     // 主页容器样式
     lv_style_init(&homepageStyle);

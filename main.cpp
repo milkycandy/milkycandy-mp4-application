@@ -39,6 +39,7 @@ int main(void) {
 
     DisplayManager::getInstance().init(ScreenRotation::ROTATION_0, "/dev/input/event0");
 
+    FontManager::init();
     StyleManager::init();
 
     lv_obj_clear_flag(lv_screen_active(), LV_OBJ_FLAG_SCROLLABLE);
@@ -55,6 +56,9 @@ int main(void) {
         lv_timer_handler();
 
         usleep(200);
+        // uint32_t sleep_ms = lv_timer_handler();
+
+        // usleep(sleep_ms * 1000);
     }
 
     return 0;

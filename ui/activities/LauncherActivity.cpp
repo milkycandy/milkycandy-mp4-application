@@ -49,8 +49,8 @@ void LauncherActivity::onCreate() {
         lv_obj_set_align(imgBtn, LV_ALIGN_TOP_MID);
         lv_obj_add_style(imgBtn, StyleManager::getPressedImageButtonStyle(), LV_PART_MAIN | LV_STATE_PRESSED);
 
-        if(event_cb) {
-            lv_obj_add_event_cb(imgBtn, event_cb, LV_EVENT_CLICKED, nullptr);
+        if (event_cb) {
+            lv_obj_add_event_cb(imgBtn, event_cb, LV_EVENT_RELEASED, nullptr);
         }
 
         lv_obj_t* label = lv_label_create(container);
@@ -91,8 +91,21 @@ void LauncherActivity::onDestroy() {
 }
 
 void LauncherActivity::go_to_music_event_cb(lv_event_t* e) {
-    ActivityManager& manager = ActivityManager::getInstance();
-    manager.startActivity(new MusicListActivity(&manager, "/root/music"));
+    lv_obj_t* obj = (lv_obj_t*)lv_event_get_target(e);  // 强制转换
+    lv_indev_t* indev = lv_indev_active();
+    
+    // 检查释放时手指/光标是否还在按钮区域内
+    if(indev) {
+        lv_point_t point;
+        lv_indev_get_point(indev, &point);
+        
+        // 判断释放点是否在对象范围内
+        if(lv_obj_hit_test(obj, &point)) {
+            ActivityManager& manager = ActivityManager::getInstance();
+            manager.startActivity(new MusicListActivity(&manager, "/root/music"));
+        }
+        // 如果不在范围内,则不触发,相当于"放弃点击"
+    }
     // Toast::show("你好，我是Toast！");
     // Dialog::showDualButton(
     //     "你好",

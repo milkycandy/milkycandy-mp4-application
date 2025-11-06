@@ -3,7 +3,11 @@
 
 class StyleManager {
 public:
-    // 初始化样式（程序启动时调用）
+    /**
+     * @brief 初始化所有全局UI样式。
+     * @warning 在调用此函数之前，必须先调用 FontManager::init() 来加载字体资源，
+     *          因为样式定义依赖于字体。
+     */
     static void init();
 
     // 样式获取函数

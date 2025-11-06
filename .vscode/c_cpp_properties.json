@@ -8,7 +8,7 @@
                 "${workspaceFolder}/**",
                 "/root/Lyra-sdk/buildroot/output/rockchip_rk3506_luckfox/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include",
                 "/root/Lyra-sdk/buildroot/output/rockchip_rk3506_luckfox/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/lvgl",
-                "/root/Lyra-sdk/buildroot/output/rockchip_rk3506_luckfox/build/lvgl-9.1"
+                "/root/Lyra-sdk/buildroot/output/rockchip_rk3506_luckfox/build/lvgl-9.4.0"
             ],
 
             "defines": [

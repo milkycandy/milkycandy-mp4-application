@@ -1,6 +1,7 @@
 #include "ActivityManager.h"
 #include "lvgl.h"
 #include <cmath>
+#include "managers/DisplayManager.h" // 包含头文件
 
 namespace AnimationCallbacks {
     // 动画完成回调：销毁一个 activity
@@ -122,11 +123,8 @@ void ActivityManager::enableGlobalSwipe() {
         Activity* currentActivity = manager.activityStack.back();
         if (!currentActivity->swipeToReturnEnabled) return;
 
-        // 获取触摸输入设备
-        lv_indev_t* indev = lv_indev_get_next(nullptr);
-        while (indev && lv_indev_get_type(indev) != LV_INDEV_TYPE_POINTER) {
-            indev = lv_indev_get_next(indev);
-        }
+        // 通过 DisplayManager 获取输入设备
+        lv_indev_t* indev = DisplayManager::getInstance().getInputDevice();
         if (!indev) return;
 
         lv_point_t currentPoint;
