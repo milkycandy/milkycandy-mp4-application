@@ -54,7 +54,7 @@ void VideoPlayerActivity::createUI() {
     lv_obj_set_x(ui_Container2x, 0);
     lv_obj_set_y(ui_Container2x, 40);
     lv_obj_set_align(ui_Container2x, LV_ALIGN_TOP_MID);
-    lv_obj_remove_flag(ui_Container2x, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);  /// Flags
+    lv_obj_remove_flag(ui_Container2x, (lv_obj_flag_t)(LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE));  /// Flags
     lv_obj_set_style_radius(ui_Container2x, 8, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_color(ui_Container2x, lv_color_hex(0x1D1D1D), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_Container2x, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -68,7 +68,7 @@ void VideoPlayerActivity::createUI() {
     lv_obj_set_x(ui_Container2xBox, 5);
     lv_obj_set_y(ui_Container2xBox, 0);
     lv_obj_set_align(ui_Container2xBox, LV_ALIGN_LEFT_MID);
-    lv_obj_remove_flag(ui_Container2xBox, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);  /// Flags
+    lv_obj_remove_flag(ui_Container2xBox, (lv_obj_flag_t)(LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE));  /// Flags
 
     ui_Triangle1 = lv_image_create(ui_Container2xBox);
     lv_image_set_src(ui_Triangle1, &videoplayer_play);
@@ -114,7 +114,7 @@ void VideoPlayerActivity::createUI() {
     lv_obj_set_width(ui_ContainerHUD, lv_pct(100));
     lv_obj_set_height(ui_ContainerHUD, lv_pct(100));
     lv_obj_set_align(ui_ContainerHUD, LV_ALIGN_CENTER);
-    lv_obj_remove_flag(ui_ContainerHUD, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);  /// Flags
+    lv_obj_remove_flag(ui_ContainerHUD, (lv_obj_flag_t)(LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE));  /// Flags
 
     ui_BackButton = lv_image_create(ui_ContainerHUD);
     lv_image_set_src(ui_BackButton, &videoplayer_back);
@@ -204,7 +204,7 @@ void VideoPlayerActivity::createUI() {
     lv_obj_set_x(ui_PlaySpeedButton, -4);
     lv_obj_set_y(ui_PlaySpeedButton, 207);
     lv_obj_set_align(ui_PlaySpeedButton, LV_ALIGN_RIGHT_MID);
-    lv_obj_remove_flag(ui_PlaySpeedButton, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);  /// Flags
+    lv_obj_remove_flag(ui_PlaySpeedButton, (lv_obj_flag_t)(LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE));  /// Flags
 
     ui_PlaySpeedText = lv_label_create(ui_PlaySpeedButton);
     lv_obj_set_width(ui_PlaySpeedText, LV_SIZE_CONTENT);   /// 50

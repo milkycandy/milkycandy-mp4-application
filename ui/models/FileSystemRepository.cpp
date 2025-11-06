@@ -3,7 +3,10 @@
 #include <dirent.h> // Linux/Unix 目录操作头文件
 #include <sys/stat.h>
 
-std::vector<FileEntry> FileSystemRepository::getEntries(const std::string& path) {
+std::vector<FileEntry> FileSystemRepository::getEntries(
+    const std::string& path,
+    const std::unordered_set<std::string>& allowExts) {
+        
     std::vector<FileEntry> entries;
     DIR* dir = opendir(path.c_str());
     if (!dir) {
@@ -25,11 +28,21 @@ std::vector<FileEntry> FileSystemRepository::getEntries(const std::string& path)
         }
 
         bool isDir = S_ISDIR(st.st_mode);
-        bool isMp4 = !isDir && (name.length() > 4 && name.substr(name.length() - 4) == ".mp4");
+        bool pass = isDir;
 
-        if (isDir || isMp4) {
-            entries.push_back({name, fullPath, isDir});
+        if (!isDir && !allowExts.empty()) {
+            // 后缀名转小写匹配
+            auto pos = name.find_last_of('.');
+            if (pos != std::string::npos) {
+                std::string ext = name.substr(pos); // 包含点
+                for (auto& c : ext) c = std::tolower(c);
+                pass = (allowExts.count(ext) > 0);
+            } else {
+                pass = false;
+            }
         }
+
+        if (pass) entries.push_back({name, fullPath, isDir});
     }
     closedir(dir);
 

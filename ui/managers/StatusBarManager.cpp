@@ -18,7 +18,7 @@ void StatusBarManager::init() {
     lv_obj_set_width(ui_StatusBar, lv_pct(100));
     lv_obj_set_height(ui_StatusBar, lv_pct(6));
     lv_obj_set_align(ui_StatusBar, LV_ALIGN_TOP_MID);
-    lv_obj_remove_flag(ui_StatusBar, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);
+    lv_obj_remove_flag(ui_StatusBar, (lv_obj_flag_t)(LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE));
 
     ui_ImageBluetooth = lv_image_create(ui_StatusBar);
     lv_image_set_src(ui_ImageBluetooth, &statusbar_bluetooth);

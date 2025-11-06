@@ -7,7 +7,7 @@ void VideoPresenter::loadEntries(const std::string& path) {
     if (!view_) return;
 
     // 从 Model 获取数据
-    auto entries = repository_.getEntries(path);
+    auto entries = repository_.getEntries(path, exts_);
 
     // 计算文件夹和文件数量
     int folderCount = 0;

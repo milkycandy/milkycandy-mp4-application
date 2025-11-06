@@ -3,6 +3,7 @@
 #include "../ActivityManager.h"
 #include "MusicActivity.h"
 #include "VideoListActivity.h"
+#include "MusicListActivity.h"
 #include "lvgl.h"
 #include "../managers/StyleManager.h"
 #include "../widgets/Dialog.h"
@@ -38,7 +39,7 @@ void LauncherActivity::onCreate() {
         lv_obj_remove_style_all(container);
         lv_obj_add_style(container, StyleManager::getTileContainerStyle(), LV_PART_MAIN | LV_STATE_DEFAULT);
         lv_obj_set_align(container, LV_ALIGN_CENTER);
-        lv_obj_remove_flag(container, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);
+        lv_obj_remove_flag(container, (lv_obj_flag_t)(LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE));
 
         lv_obj_t* imgBtn = lv_imagebutton_create(container);
         lv_imagebutton_set_src(imgBtn, LV_IMAGEBUTTON_STATE_RELEASED, nullptr, imgSrc, nullptr);
@@ -74,7 +75,7 @@ void LauncherActivity::onCreate() {
     lv_obj_remove_style_all(ui_ContainerPlaceHolder);
     lv_obj_add_style(ui_ContainerPlaceHolder, StyleManager::getTileContainerStyle(), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_align(ui_ContainerPlaceHolder, LV_ALIGN_CENTER);
-    lv_obj_remove_flag(ui_ContainerPlaceHolder, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);
+    lv_obj_remove_flag(ui_ContainerPlaceHolder, (lv_obj_flag_t)(LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE));
 }
 
 void LauncherActivity::onResume() {
@@ -91,7 +92,7 @@ void LauncherActivity::onDestroy() {
 
 void LauncherActivity::go_to_music_event_cb(lv_event_t* e) {
     ActivityManager& manager = ActivityManager::getInstance();
-    manager.startActivity(new MusicActivity(&manager));
+    manager.startActivity(new MusicListActivity(&manager, "/root/music"));
     // Toast::show("你好，我是Toast！");
     // Dialog::showDualButton(
     //     "你好",

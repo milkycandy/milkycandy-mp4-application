@@ -32,7 +32,7 @@ void Dialog::create_ui(lv_obj_t* parent, const std::string& title, const std::st
     lv_obj_remove_style_all(container_);
     lv_obj_set_size(container_, lv_pct(100), lv_pct(100));
     lv_obj_set_align(container_, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(container_, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);
+    lv_obj_clear_flag(container_, (lv_obj_flag_t)(LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE));
 
     mask_ = lv_obj_create(container_);
     lv_obj_remove_style_all(mask_);
@@ -151,7 +151,7 @@ void Dialog::close_animation() {
     lv_anim_t a_mask;
     lv_anim_init(&a_mask);
     lv_anim_set_var(&a_mask, mask_);
-    lv_anim_set_values(&a_mask, lv_obj_get_style_bg_opa(mask_, 0), 0);
+    lv_anim_set_values(&a_mask, lv_obj_get_style_bg_opa(mask_, LV_PART_MAIN), 0);
     lv_anim_set_time(&a_mask, 150);
     lv_anim_set_exec_cb(&a_mask, [](void* var, int32_t v) {
         lv_obj_set_style_bg_opa((lv_obj_t*)var, v, 0);
@@ -163,7 +163,7 @@ void Dialog::close_animation() {
     lv_anim_init(&a_dialog);
     lv_anim_set_var(&a_dialog, alert_dialog_);
     // printf("AlertDialog y: %d\n", lv_obj_get_style_y(alert_dialog_, 0));
-    lv_anim_set_values(&a_dialog, lv_obj_get_style_y(alert_dialog_, 0), anim_start_y_);
+    lv_anim_set_values(&a_dialog, lv_obj_get_style_y(alert_dialog_, LV_PART_MAIN), anim_start_y_);
     lv_anim_set_time(&a_dialog, 150);
     lv_anim_set_path_cb(&a_dialog, lv_anim_path_ease_out);
     lv_anim_set_exec_cb(&a_dialog, [](void* var, int32_t v) {

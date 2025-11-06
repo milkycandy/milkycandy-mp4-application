@@ -16,4 +16,5 @@ public:
 private:
     VideoListActivity* view_; // 指向 View 的指针
     FileSystemRepository repository_;
+    const std::unordered_set<std::string> exts_{".mp4"};
 };

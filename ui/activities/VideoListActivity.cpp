@@ -99,6 +99,7 @@ void VideoListActivity::createListItem(lv_obj_t* parent, const FileEntry& entry,
         lv_image_set_src(icon, &movie_66px_grey);
     }
     lv_obj_set_align(icon, LV_ALIGN_LEFT_MID);
+    // lv_obj_add_flag(icon, LV_OBJ_FLAG_HIDDEN);
 
     // 标签
     lv_obj_t* label = lv_label_create(item);
@@ -106,6 +107,7 @@ void VideoListActivity::createListItem(lv_obj_t* parent, const FileEntry& entry,
     lv_obj_add_style(label, StyleManager::getFileListLabelStyle(), 0);
     lv_obj_set_align(label, LV_ALIGN_LEFT_MID);
     lv_obj_set_style_pad_left(label, 74, 0);
+    // lv_obj_add_flag(label, LV_OBJ_FLAG_HIDDEN);
 }
 
 

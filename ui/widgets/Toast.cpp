@@ -13,7 +13,7 @@ void Toast::show(const std::string& text, Duration duration) {
     lv_obj_set_style_radius(container, 255, 0);
     lv_obj_set_style_bg_color(container, lv_color_hex(0x323232), 0);
     lv_obj_set_style_bg_opa(container, 230, 0);
-    lv_obj_clear_flag(container, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);
+    lv_obj_clear_flag(container, (lv_obj_flag_t)(LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE));
 
     lv_obj_t* label = lv_label_create(container);
     lv_label_set_text(label, text.c_str());
@@ -49,7 +49,7 @@ void Toast::fade_in(lv_obj_t* obj) {
 }
 
 void Toast::fade_out_cb(lv_timer_t* timer) {
-    lv_obj_t* obj = (lv_obj_t*)timer->user_data;
+    lv_obj_t* obj = (lv_obj_t*)lv_timer_get_user_data(timer);
     lv_timer_del(timer);
 
     lv_anim_t a;

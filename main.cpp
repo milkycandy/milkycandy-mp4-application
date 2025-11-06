@@ -33,7 +33,7 @@ int main(void) {
 
     lv_init();
 
-    // 启动精确 tick 定时线程
+    // 启动 tick 定时线程
     pthread_t tick_th;
     pthread_create(&tick_th, NULL, tickThread, NULL);
 
@@ -54,7 +54,7 @@ int main(void) {
     while (1) {
         lv_timer_handler();
 
-        usleep(200);  // 主线程休眠 0.2ms
+        usleep(200);
     }
 
     return 0;

@@ -5,6 +5,12 @@
 #include "../managers/FontManager.h"
 #include "lvgl.h"
 
+MusicActivity::MusicActivity(ActivityManager* manager, std::string path)
+    : Activity(manager), musicPath_(std::move(path)) {}
+
+// 析构函数
+MusicActivity::~MusicActivity() {}
+
 void MusicActivity::onCreate()
 {
     // swipeToReturnEnabled = false;
@@ -12,7 +18,7 @@ void MusicActivity::onCreate()
     lv_obj_set_style_bg_color(root, lv_palette_main(LV_PALETTE_GREEN), 0);
 
     lv_obj_t *label = lv_label_create(root);
-    lv_label_set_text(label, "我是新页面");
+    lv_label_set_text(label, musicPath_.c_str());
     lv_obj_set_style_text_font(label, FontManager::getFont(28), 0);
     lv_obj_align(label, LV_ALIGN_CENTER, 0, -50);
 
