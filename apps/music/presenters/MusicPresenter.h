@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
 #include <unordered_set>
-#include "../models/FileSystemRepository.h"
-#include "../models/FileEntry.h"
+#include "libs/models/FileSystemRepository.h"
+#include "libs/models/FileEntry.h"
 
 class MusicListActivity; // 前置声明
 

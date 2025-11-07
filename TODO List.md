@@ -1,3 +1,4 @@
 - [x] 把所有图片换回png，因为现在的png性能已经够快了
-- [ ] 调整代码结构，按Application分开组织代码
+- [x] 调整代码结构，按Application分开组织代码
 - [ ] LVGL控件使用name
+- [ ] 从Activity中分离UI创建代码

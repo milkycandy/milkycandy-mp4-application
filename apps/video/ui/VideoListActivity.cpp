@@ -1,9 +1,9 @@
 #include "VideoListActivity.h"
 #include "VideoPlayerActivity.h"
-#include "../ActivityManager.h"
-#include "../managers/FontManager.h"
-#include "../managers/StyleManager.h"
-#include "../widgets/Toast.h"
+#include "framework/activity/ActivityManager.h"
+#include "framework/ui/managers/FontManager.h"
+#include "framework/ui/managers/StyleManager.h"
+#include "framework/ui/widgets/Toast.h"
 #include "lvgl.h"
 
 // 构造函数
@@ -91,9 +91,9 @@ void VideoListActivity::createListItem(lv_obj_t* parent, const FileEntry& entry,
     // 图标
     lv_obj_t* icon = lv_image_create(item);
     if (entry.isDirectory) {
-        lv_image_set_src(icon, "L:/usr/share/myapp/assets/images/folder_66px_blue.png");
+        lv_image_set_src(icon, "L:/usr/share/myapp/assets/images/common/folder_66px_blue.png");
     } else {
-        lv_image_set_src(icon, "L:/usr/share/myapp/assets/images/movie_66px_grey.png");
+        lv_image_set_src(icon, "L:/usr/share/myapp/assets/images/common/movie_66px_grey.png");
     }
     lv_obj_set_align(icon, LV_ALIGN_LEFT_MID);
     // lv_obj_add_flag(icon, LV_OBJ_FLAG_HIDDEN);

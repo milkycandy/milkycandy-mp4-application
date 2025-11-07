@@ -1,8 +1,8 @@
 #include "VideoPlayerActivity.h"
 
-#include "../managers/DisplayManager.h"
-#include "../managers/FontManager.h"
-#include "../managers/StatusBarManager.h"
+#include "framework/platform/DisplayManager.h"
+#include "framework/ui/managers/FontManager.h"
+#include "framework/systemui/StatusBarManager.h"
 #include "lvgl.h"
 
 // 构造函数
@@ -65,7 +65,7 @@ void VideoPlayerActivity::createUI() {
     lv_obj_remove_flag(ui_Container2xBox, (lv_obj_flag_t)(LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE));  /// Flags
 
     ui_Triangle1 = lv_image_create(ui_Container2xBox);
-    lv_image_set_src(ui_Triangle1, "L:/usr/share/myapp/assets/images/videoplayer_play.png");
+    lv_image_set_src(ui_Triangle1, "L:/usr/share/myapp/assets/images/video/videoplayer_play.png");
     lv_obj_set_width(ui_Triangle1, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_Triangle1, LV_SIZE_CONTENT);  /// 1
     lv_obj_set_x(ui_Triangle1, -22);
@@ -75,7 +75,7 @@ void VideoPlayerActivity::createUI() {
     lv_obj_remove_flag(ui_Triangle1, LV_OBJ_FLAG_SCROLLABLE);  /// Flags
 
     ui_Triangle2 = lv_image_create(ui_Container2xBox);
-    lv_image_set_src(ui_Triangle2, "L:/usr/share/myapp/assets/images/videoplayer_play.png");
+    lv_image_set_src(ui_Triangle2, "L:/usr/share/myapp/assets/images/video/videoplayer_play.png");
     lv_obj_set_width(ui_Triangle2, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_Triangle2, LV_SIZE_CONTENT);  /// 1
     lv_obj_set_align(ui_Triangle2, LV_ALIGN_CENTER);
@@ -83,7 +83,7 @@ void VideoPlayerActivity::createUI() {
     lv_obj_remove_flag(ui_Triangle2, LV_OBJ_FLAG_SCROLLABLE);  /// Flags
 
     ui_Triangle3 = lv_image_create(ui_Container2xBox);
-    lv_image_set_src(ui_Triangle3, "L:/usr/share/myapp/assets/images/videoplayer_play.png");
+    lv_image_set_src(ui_Triangle3, "L:/usr/share/myapp/assets/images/video/videoplayer_play.png");
     lv_obj_set_width(ui_Triangle3, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_Triangle3, LV_SIZE_CONTENT);  /// 1
     lv_obj_set_x(ui_Triangle3, 22);
@@ -111,7 +111,7 @@ void VideoPlayerActivity::createUI() {
     lv_obj_remove_flag(ui_ContainerHUD, (lv_obj_flag_t)(LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE));  /// Flags
 
     ui_BackButton = lv_image_create(ui_ContainerHUD);
-    lv_image_set_src(ui_BackButton, "L:/usr/share/myapp/assets/images/videoplayer_back.png");
+    lv_image_set_src(ui_BackButton, "L:/usr/share/myapp/assets/images/video/videoplayer_back.png");
     lv_obj_set_width(ui_BackButton, 60);
     lv_obj_set_height(ui_BackButton, 60);
     lv_obj_set_x(ui_BackButton, -373);
@@ -149,7 +149,7 @@ void VideoPlayerActivity::createUI() {
     if (lv_obj_get_style_pad_top(ui_SeekBar, LV_PART_MAIN) > 0)
         lv_obj_set_style_pad_right(ui_SeekBar, lv_obj_get_style_pad_right(ui_SeekBar, LV_PART_MAIN) + 1, LV_PART_MAIN);
     ui_PlayButton = lv_image_create(ui_ContainerHUD);
-    lv_image_set_src(ui_PlayButton, "L:/usr/share/myapp/assets/images/videoplayer_pause.png");
+    lv_image_set_src(ui_PlayButton, "L:/usr/share/myapp/assets/images/video/videoplayer_pause.png");
     lv_obj_set_width(ui_PlayButton, 70);
     lv_obj_set_height(ui_PlayButton, 50);
     lv_obj_set_x(ui_PlayButton, -362);
@@ -170,7 +170,7 @@ void VideoPlayerActivity::createUI() {
     lv_obj_set_style_text_font(ui_PlayTime, FontManager::getFont(20), LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_MoreButton = lv_image_create(ui_ContainerHUD);
-    lv_image_set_src(ui_MoreButton, "L:/usr/share/myapp/assets/images/videoplayer_more.png");
+    lv_image_set_src(ui_MoreButton, "L:/usr/share/myapp/assets/images/video/videoplayer_more.png");
     lv_obj_set_width(ui_MoreButton, 60);
     lv_obj_set_height(ui_MoreButton, 60);
     lv_obj_set_x(ui_MoreButton, 367);
@@ -213,7 +213,7 @@ void VideoPlayerActivity::createUI() {
     lv_obj_set_style_text_font(ui_PlaySpeedText, FontManager::getFont(24), LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_BatteryImage = lv_image_create(ui_ContainerHUD);
-    lv_image_set_src(ui_BatteryImage, "L:/usr/share/myapp/assets/images/videoplayer_battery_5_37.png");
+    lv_image_set_src(ui_BatteryImage, "L:/usr/share/myapp/assets/images/video/videoplayer_battery_5_37.png");
     lv_obj_set_width(ui_BatteryImage, LV_SIZE_CONTENT);   /// 24
     lv_obj_set_height(ui_BatteryImage, LV_SIZE_CONTENT);  /// 24
     lv_obj_set_x(ui_BatteryImage, 230);

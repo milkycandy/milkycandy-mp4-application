@@ -2,7 +2,7 @@
 #include <time.h>
 
 #include "StatusBarManager.h"
-#include "FontManager.h"
+#include "framework/ui/managers/FontManager.h"
 
 StatusBarManager& StatusBarManager::getInstance() {
     static StatusBarManager instance;

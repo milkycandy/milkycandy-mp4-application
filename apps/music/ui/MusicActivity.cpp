@@ -1,8 +1,8 @@
 #include "MusicActivity.h"
-#include "../ActivityManager.h"
-#include "../widgets/Dialog.h"
-#include "../widgets/Toast.h"
-#include "../managers/FontManager.h"
+#include "framework/activity/ActivityManager.h"
+#include "framework/ui/widgets/Dialog.h"
+#include "framework/ui/widgets/Toast.h"
+#include "framework/ui/managers/FontManager.h"
 #include "lvgl.h"
 
 MusicActivity::MusicActivity(ActivityManager* manager, std::string path)

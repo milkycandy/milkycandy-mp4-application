@@ -1,7 +1,7 @@
 #include "ActivityManager.h"
 #include "lvgl.h"
 #include <cmath>
-#include "managers/DisplayManager.h" // 包含头文件
+#include "framework/platform/DisplayManager.h" // 包含头文件
 
 namespace AnimationCallbacks {
     // 动画完成回调：销毁一个 activity

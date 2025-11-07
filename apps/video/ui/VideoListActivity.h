@@ -1,6 +1,6 @@
 #pragma once
-#include "../Activity.h"
-#include "../models/FileEntry.h"
+#include "framework/activity/Activity.h"
+#include "libs/models/FileEntry.h"
 #include "../presenters/VideoPresenter.h"
 #include <memory>
 #include <string>

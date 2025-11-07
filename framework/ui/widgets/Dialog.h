@@ -3,7 +3,7 @@
 #include <functional>
 #include <string>
 
-#include "../ActivityManager.h"
+#include "framework/activity/ActivityManager.h"
 #include "lvgl.h"
 
 class Dialog {

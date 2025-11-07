@@ -4,13 +4,13 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "ui/ActivityManager.h"
-#include "ui/activities/LauncherActivity.h"
-#include "ui/activities/MusicActivity.h"
-#include "ui/managers/FontManager.h"
-#include "ui/managers/DisplayManager.h"
-#include "ui/managers/StatusBarManager.h"
-#include "ui/managers/StyleManager.h"
+#include "framework/activity/ActivityManager.h"
+#include "apps/LauncherActivity.h"
+#include "apps/music/ui/MusicActivity.h"
+#include "framework/ui/managers/FontManager.h"
+#include "framework/platform/DisplayManager.h"
+#include "framework/systemui/StatusBarManager.h"
+#include "framework/ui/managers/StyleManager.h"
 
 // 精准的 1ms LVGL tick 定时器
 void *tickThread(void *data) {

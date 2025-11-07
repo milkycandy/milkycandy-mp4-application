@@ -1,5 +1,5 @@
 #include "VideoPresenter.h"
-#include "../activities/VideoListActivity.h"
+#include "apps/video/ui/VideoListActivity.h"
 
 VideoPresenter::VideoPresenter(VideoListActivity* view) : view_(view) {}
 

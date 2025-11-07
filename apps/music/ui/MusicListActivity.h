@@ -1,9 +1,9 @@
 #pragma once
-#include "../Activity.h"
+#include "framework/activity/Activity.h"
 #include <memory>
 #include <vector>
 #include <string>
-#include "../models/FileEntry.h"
+#include "libs/models/FileEntry.h"
 
 class MusicPresenter;
 

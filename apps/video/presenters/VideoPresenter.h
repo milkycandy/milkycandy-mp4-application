@@ -1,7 +1,8 @@
 #pragma once
-#include "../models/FileEntry.h"
-#include "../models/FileSystemRepository.h"
+#include "libs/models/FileEntry.h"
+#include "libs/models/FileSystemRepository.h"
 #include <string>
+#include <unordered_set>
 
 // 前向声明，避免头文件循环引用
 class VideoListActivity;

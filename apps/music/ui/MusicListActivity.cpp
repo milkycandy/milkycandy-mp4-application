@@ -1,11 +1,11 @@
 #include "MusicListActivity.h"
 #include "MusicActivity.h"
-#include "../ActivityManager.h"
-#include "../managers/FontManager.h"
-#include "../managers/StyleManager.h"
-#include "../widgets/Toast.h"
+#include "framework/activity/ActivityManager.h"
+#include "framework/ui/managers/FontManager.h"
+#include "framework/ui/managers/StyleManager.h"
+#include "framework/ui/widgets/Toast.h"
 #include "lvgl.h"
-#include "../presenters/MusicPresenter.h"
+#include "apps/music/presenters/MusicPresenter.h"
 
 MusicListActivity::MusicListActivity(ActivityManager* manager, std::string path)
     : Activity(manager), currentPath_(std::move(path)) {}
@@ -72,8 +72,8 @@ void MusicListActivity::createListItem(lv_obj_t* parent, FileEntry* entry, int i
     lv_obj_add_event_cb(item, list_item_event_cb, LV_EVENT_CLICKED, this);
 
     lv_obj_t* icon = lv_image_create(item);
-    if (entry->isDirectory) lv_image_set_src(icon, "L:/usr/share/myapp/assets/images/folder_66px_blue.png");
-    else                    lv_image_set_src(icon, "L:/usr/share/myapp/assets/images/movie_66px_grey.png");
+    if (entry->isDirectory) lv_image_set_src(icon, "L:/usr/share/myapp/assets/images/common/folder_66px_blue.png");
+    else                    lv_image_set_src(icon, "L:/usr/share/myapp/assets/images/common/movie_66px_grey.png");
     lv_obj_set_align(icon, LV_ALIGN_LEFT_MID);
 
     lv_obj_t* label = lv_label_create(item);

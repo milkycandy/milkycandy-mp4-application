@@ -1,18 +1,18 @@
 #include "LauncherActivity.h"
 
-#include "../ActivityManager.h"
-#include "MusicActivity.h"
-#include "VideoListActivity.h"
-#include "MusicListActivity.h"
+#include "framework/activity/ActivityManager.h"
+#include "music/ui/MusicActivity.h"
+#include "video/ui/VideoListActivity.h"
+#include "music/ui/MusicListActivity.h"
 #include "lvgl.h"
-#include "../managers/StyleManager.h"
-#include "../widgets/Dialog.h"
-#include "../widgets/Toast.h"
+#include "framework/ui/managers/StyleManager.h"
+#include "framework/ui/widgets/Dialog.h"
+#include "framework/ui/widgets/Toast.h"
 
 void LauncherActivity::onCreate() {
     enableEnterAnimation = false;  // 关闭进入动画
 
-    lv_obj_set_style_bg_image_src(lv_screen_active(), "L:/usr/share/myapp/assets/images/wallpaper.png", 0);
+    lv_obj_set_style_bg_image_src(lv_screen_active(), "L:/usr/share/myapp/assets/images/launcher/wallpaper.png", 0);
     lv_obj_set_style_bg_opa(lv_screen_active(), 255, 0);
 
     lv_obj_set_style_bg_opa(root, 0, 0);
@@ -65,9 +65,9 @@ void LauncherActivity::onCreate() {
     };
 
     // 创建具体条目
-    lv_obj_t* ui_ContainerMusic = createTile(ui_HomePage, "L:/usr/share/myapp/assets/images/launcher_music.png", "音乐", go_to_music_event_cb);
-    lv_obj_t* ui_ContainerVideo = createTile(ui_HomePage, "L:/usr/share/myapp/assets/images/launcher_video.png", "视频", launchVideoListActivity);
-    lv_obj_t* ui_ContainerSettings = createTile(ui_HomePage, "L:/usr/share/myapp/assets/images/launcher_settings.png", "设置", nullptr);
+    lv_obj_t* ui_ContainerMusic = createTile(ui_HomePage, "L:/usr/share/myapp/assets/images/launcher/music.png", "音乐", go_to_music_event_cb);
+    lv_obj_t* ui_ContainerVideo = createTile(ui_HomePage, "L:/usr/share/myapp/assets/images/launcher/video.png", "视频", launchVideoListActivity);
+    lv_obj_t* ui_ContainerSettings = createTile(ui_HomePage, "L:/usr/share/myapp/assets/images/launcher/settings.png", "设置", nullptr);
 
     // 占位容器（无图、无标签）
     lv_obj_t* ui_ContainerPlaceHolder = lv_obj_create(ui_HomePage);
