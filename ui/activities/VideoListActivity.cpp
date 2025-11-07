@@ -6,9 +6,6 @@
 #include "../widgets/Toast.h"
 #include "lvgl.h"
 
-LV_IMG_DECLARE(folder_66px_blue);
-LV_IMG_DECLARE(movie_66px_grey);
-
 // 构造函数
 VideoListActivity::VideoListActivity(ActivityManager* manager, std::string path)
     : Activity(manager), currentPath_(std::move(path)) {}
@@ -94,9 +91,9 @@ void VideoListActivity::createListItem(lv_obj_t* parent, const FileEntry& entry,
     // 图标
     lv_obj_t* icon = lv_image_create(item);
     if (entry.isDirectory) {
-        lv_image_set_src(icon, &folder_66px_blue);
+        lv_image_set_src(icon, "L:/usr/share/myapp/assets/images/folder_66px_blue.png");
     } else {
-        lv_image_set_src(icon, &movie_66px_grey);
+        lv_image_set_src(icon, "L:/usr/share/myapp/assets/images/movie_66px_grey.png");
     }
     lv_obj_set_align(icon, LV_ALIGN_LEFT_MID);
     // lv_obj_add_flag(icon, LV_OBJ_FLAG_HIDDEN);

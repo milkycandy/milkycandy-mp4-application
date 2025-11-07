@@ -54,6 +54,7 @@
         "typeinfo": "cpp",
         "unordered_set": "cpp",
         "condition_variable": "cpp",
-        "mutex": "cpp"
+        "mutex": "cpp",
+        "iostream": "cpp"
     }
 }

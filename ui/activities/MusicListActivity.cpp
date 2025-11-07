@@ -7,9 +7,6 @@
 #include "lvgl.h"
 #include "../presenters/MusicPresenter.h"
 
-LV_IMG_DECLARE(folder_66px_blue);
-LV_IMG_DECLARE(movie_66px_grey);
-
 MusicListActivity::MusicListActivity(ActivityManager* manager, std::string path)
     : Activity(manager), currentPath_(std::move(path)) {}
 
@@ -75,8 +72,8 @@ void MusicListActivity::createListItem(lv_obj_t* parent, FileEntry* entry, int i
     lv_obj_add_event_cb(item, list_item_event_cb, LV_EVENT_CLICKED, this);
 
     lv_obj_t* icon = lv_image_create(item);
-    if (entry->isDirectory) lv_image_set_src(icon, &folder_66px_blue);
-    else                    lv_image_set_src(icon, &movie_66px_grey);
+    if (entry->isDirectory) lv_image_set_src(icon, "L:/usr/share/myapp/assets/images/folder_66px_blue.png");
+    else                    lv_image_set_src(icon, "L:/usr/share/myapp/assets/images/movie_66px_grey.png");
     lv_obj_set_align(icon, LV_ALIGN_LEFT_MID);
 
     lv_obj_t* label = lv_label_create(item);
