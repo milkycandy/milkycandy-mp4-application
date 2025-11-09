@@ -22,41 +22,20 @@ void MusicActivity::onCreate()
     lv_obj_set_style_text_font(label, FontManager::getFont(28), 0);
     lv_obj_align(label, LV_ALIGN_CENTER, 0, -50);
 
-    lv_obj_t *btn = lv_btn_create(root);
-    lv_obj_align(btn, LV_ALIGN_CENTER, 0, 0);
-    lv_obj_add_event_cb(btn, back_button_event_cb, LV_EVENT_CLICKED, nullptr);
-    lv_obj_t *btn_label = lv_label_create(btn);
-    lv_obj_set_style_text_font(btn_label, FontManager::getFont(28), 0);
-    lv_label_set_text(btn_label, "显示Dialog");
-    lv_obj_center(btn_label);
+    player_ = std::make_unique<GStreamerAudioPlayer>();
+    player_->setSource(musicPath_);
+    player_->setVolume(0.80f);
+    player_->setOnEos([](){
+        // 播放结束可做提示或自动退出
+        Toast::show("播放结束");
+    });
+    player_->setOnError([](const std::string& reason){
+        Toast::show("播放失败: " + reason);
+        LV_LOG_ERROR("GStreamerAudioPlayer error: %s", reason.c_str());
+    });
+    player_->play();
 }
 
 void MusicActivity::onDestroy()
 {
-    LV_LOG_USER("MusicActivity onDestroy");
-}
-
-void MusicActivity::back_button_event_cb(lv_event_t *e)
-{
-    // ActivityManager::getInstance().finishCurrentActivity();
-    Dialog::showDualButton(
-        "你好",
-        "早上好！\n我是一个双按钮Dialog! 你想见见单按钮Dialog吗？",
-        []()
-        {
-            Toast::show("来了！");
-            Dialog::showSingleButton(
-                "Hi",
-                "我是单按钮Dialog，向你问好！",
-                []()
-                {
-                    Toast::show("下次见！");
-                });
-        },
-        []()
-        {
-            Toast::show("那拜拜！");
-        },
-        "好捏",
-        "不要");
 }

@@ -14,5 +14,5 @@ public:
 private:
     MusicListActivity* view_ = nullptr;
     FileSystemRepository repository_;
-    const std::unordered_set<std::string> exts_{".mp3",".flac",".wav",".aac",".ogg",".m4a"};
+    const std::unordered_set<std::string> exts_{".mp3",".flac",".wav"};
 };

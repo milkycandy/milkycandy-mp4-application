@@ -1,6 +1,8 @@
 #pragma once
 #include "framework/activity/Activity.h"
 #include <string>
+#include <memory>
+#include "services/AudioPlayer/GStreamerAudioPlayer.h"
 
 class MusicActivity : public Activity {
 public:
@@ -13,4 +15,6 @@ public:
 private:
     static void back_button_event_cb(lv_event_t* e);
     std::string musicPath_;
+
+    std::unique_ptr<AudioPlayer> player_;
 };

@@ -65,9 +65,9 @@ void LauncherActivity::onCreate() {
     };
 
     // 创建具体条目
-    lv_obj_t* ui_ContainerMusic = createTile(ui_HomePage, "L:/usr/share/myapp/assets/images/launcher/music.png", "音乐", go_to_music_event_cb);
+    lv_obj_t* ui_ContainerMusic = createTile(ui_HomePage, "L:/usr/share/myapp/assets/images/launcher/music.png", "音乐", launchMusicListActivity);
     lv_obj_t* ui_ContainerVideo = createTile(ui_HomePage, "L:/usr/share/myapp/assets/images/launcher/video.png", "视频", launchVideoListActivity);
-    lv_obj_t* ui_ContainerSettings = createTile(ui_HomePage, "L:/usr/share/myapp/assets/images/launcher/settings.png", "设置", nullptr);
+    lv_obj_t* ui_ContainerSettings = createTile(ui_HomePage, "L:/usr/share/myapp/assets/images/launcher/settings.png", "设置", launchSettingsActivity);
 
     // 占位容器（无图、无标签）
     lv_obj_t* ui_ContainerPlaceHolder = lv_obj_create(ui_HomePage);
@@ -89,7 +89,7 @@ void LauncherActivity::onDestroy() {
     // TODO: 在设备关机时销毁所有活动
 }
 
-void LauncherActivity::go_to_music_event_cb(lv_event_t* e) {
+void LauncherActivity::launchMusicListActivity(lv_event_t* e) {
     lv_obj_t* obj = (lv_obj_t*)lv_event_get_target(e);  // 强制转换
     lv_indev_t* indev = lv_indev_active();
     
@@ -132,4 +132,9 @@ void LauncherActivity::launchVideoListActivity(lv_event_t* e) {
     ActivityManager& manager = ActivityManager::getInstance();
     // 启动 VideoListActivity 并传入指定的初始路径
     manager.startActivity(new VideoListActivity(&manager, "/root/video")); 
+}
+
+void LauncherActivity::launchSettingsActivity(lv_event_t* e) {
+    Toast::show("没有这种东西！");
+
 }

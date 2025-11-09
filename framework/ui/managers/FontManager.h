@@ -16,6 +16,6 @@ public:
 
 private:
     static std::map<int, lv_font_t*> font_map;
-    static const int min_size = 20;
+    static const int min_size = 16;
     static const int max_size = 60;
 };
