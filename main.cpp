@@ -6,11 +6,11 @@
 
 #include "framework/activity/ActivityManager.h"
 #include "apps/LauncherActivity.h"
-#include "apps/music/ui/MusicActivity.h"
 #include "framework/ui/managers/FontManager.h"
 #include "framework/platform/DisplayManager.h"
 #include "framework/systemui/StatusBarManager.h"
 #include "framework/ui/managers/StyleManager.h"
+#include "services/AudioPlayer/AudioService.h"
 
 // 精准的 1ms LVGL tick 定时器
 void *tickThread(void *data) {
@@ -41,6 +41,8 @@ int main(void) {
 
     FontManager::init();
     StyleManager::init();
+
+    AudioService::getInstance().init();
 
     lv_obj_clear_flag(lv_screen_active(), LV_OBJ_FLAG_SCROLLABLE);
 

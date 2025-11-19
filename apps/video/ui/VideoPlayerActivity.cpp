@@ -101,7 +101,7 @@ void VideoPlayerActivity::createUI() {
     lv_label_set_text(ui_Label2x, "倍速播放中");
     lv_obj_set_style_text_color(ui_Label2x, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Label2x, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_Label2x, FontManager::getFont(24), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Label2x, FontManager::getDemibold(24), LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_ContainerHUD = lv_obj_create(root);
     lv_obj_remove_style_all(ui_ContainerHUD);
@@ -130,7 +130,7 @@ void VideoPlayerActivity::createUI() {
     lv_label_set_text(ui_VideoName, "败犬女主太多了！02");
     lv_obj_set_style_text_color(ui_VideoName, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_VideoName, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_VideoName, FontManager::getFont(24), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_VideoName, FontManager::getDemibold(24), LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_SeekBar = lv_slider_create(ui_ContainerHUD);
     lv_slider_set_range(ui_SeekBar, 0, 1427);
@@ -167,7 +167,7 @@ void VideoPlayerActivity::createUI() {
     lv_label_set_text(ui_PlayTime, "00:36/23:47");
     lv_obj_set_style_text_color(ui_PlayTime, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_PlayTime, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_PlayTime, FontManager::getFont(20), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_PlayTime, FontManager::getDemibold(20), LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_MoreButton = lv_image_create(ui_ContainerHUD);
     lv_image_set_src(ui_MoreButton, "L:/usr/share/myapp/assets/images/video/videoplayer_more.png");
@@ -189,7 +189,7 @@ void VideoPlayerActivity::createUI() {
     lv_label_set_text(ui_CurrentTime, "00:00");
     lv_obj_set_style_text_color(ui_CurrentTime, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_CurrentTime, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_CurrentTime, FontManager::getFont(24), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_CurrentTime, FontManager::getDemibold(24), LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_PlaySpeedButton = lv_obj_create(ui_ContainerHUD);
     lv_obj_remove_style_all(ui_PlaySpeedButton);
@@ -210,7 +210,7 @@ void VideoPlayerActivity::createUI() {
     lv_obj_set_style_text_color(ui_PlaySpeedText, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_PlaySpeedText, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_PlaySpeedText, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_PlaySpeedText, FontManager::getFont(24), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_PlaySpeedText, FontManager::getDemibold(24), LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_BatteryImage = lv_image_create(ui_ContainerHUD);
     lv_image_set_src(ui_BatteryImage, "L:/usr/share/myapp/assets/images/video/videoplayer_battery_5_37.png");

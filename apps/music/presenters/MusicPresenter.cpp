@@ -1,5 +1,5 @@
 #include "MusicPresenter.h"
-#include "apps/music/ui/MusicListActivity.h"
+#include "../activities/MusicListActivity.h"
 
 MusicPresenter::MusicPresenter(MusicListActivity* view) : view_(view) {}
 

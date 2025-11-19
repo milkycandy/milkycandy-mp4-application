@@ -55,6 +55,10 @@
         "unordered_set": "cpp",
         "condition_variable": "cpp",
         "mutex": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "chrono": "cpp",
+        "csignal": "cpp",
+        "iomanip": "cpp",
+        "sstream": "cpp"
     }
 }

@@ -34,7 +34,7 @@ void StatusBarManager::init() {
     lv_obj_set_height(ui_LabelTime, LV_SIZE_CONTENT);  /// 1
     lv_obj_set_align(ui_LabelTime, LV_ALIGN_CENTER);
     lv_label_set_text(ui_LabelTime, "3:10 PM");
-    lv_obj_set_style_text_font(ui_LabelTime, FontManager::getFont(28), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelTime, FontManager::getDemibold(28), LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_ImageBattery = lv_image_create(ui_StatusBar);
     lv_image_set_src(ui_ImageBattery, "L:/usr/share/myapp/assets/images/statusbar_battery_70.png");

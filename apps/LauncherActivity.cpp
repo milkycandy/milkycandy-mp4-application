@@ -1,9 +1,9 @@
 #include "LauncherActivity.h"
 
 #include "framework/activity/ActivityManager.h"
-#include "music/ui/MusicActivity.h"
+#include "music/activities/MusicActivity.h"
 #include "video/ui/VideoListActivity.h"
-#include "music/ui/MusicListActivity.h"
+#include "music/activities/MusicListActivity.h"
 #include "lvgl.h"
 #include "framework/ui/managers/StyleManager.h"
 #include "framework/ui/widgets/Dialog.h"

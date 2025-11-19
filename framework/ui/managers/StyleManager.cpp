@@ -37,7 +37,7 @@ void StyleManager::init() {
     lv_style_init(&tileLabelStyle);
     lv_style_set_text_color(&tileLabelStyle, lv_color_hex(0xFFFFFF));
     lv_style_set_text_opa(&tileLabelStyle, 255);
-    lv_style_set_text_font(&tileLabelStyle, FontManager::getFont(28));
+    lv_style_set_text_font(&tileLabelStyle, FontManager::getDemibold(28));
 
     // 列表项通用设置
     auto init_file_list_item_style = [](lv_style_t* style) {
@@ -60,7 +60,7 @@ void StyleManager::init() {
 
     // 文件列表中的标签样式
     lv_style_init(&fileListLabelStyle);
-    lv_style_set_text_font(&fileListLabelStyle, FontManager::getFont(26));
+    lv_style_set_text_font(&fileListLabelStyle, FontManager::getDemibold(26));
 }
 
 lv_style_t* StyleManager::getHomepageStyle() {

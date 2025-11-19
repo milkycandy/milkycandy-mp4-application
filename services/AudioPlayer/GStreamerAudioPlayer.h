@@ -23,6 +23,7 @@ public:
 
 private:
     static void ensureGstInitialized();
+    void emitMetadata(const std::string& title, const std::string& artist);
 
     bool buildPipelineFor(const std::string& path);
     void teardownPipeline();
@@ -39,10 +40,12 @@ private:
     GstElement* resample_ = nullptr;
     GstElement* sink_ = nullptr;
 
+    GstElement* queue_ = nullptr;
+
     GMainLoop* loop_ = nullptr;
     std::thread loopThread_;
     std::atomic<bool> loopRunning_{false};
-    mutable std::mutex mtx_;
+    mutable std::recursive_mutex mtx_;
 
     guint bus_watch_id_ = 0;
 };

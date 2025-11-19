@@ -21,8 +21,10 @@ public:
     // 回调：可选
     void setOnEos(const std::function<void()>& cb) { onEos_ = cb; }
     void setOnError(const std::function<void(const std::string&)>& cb) { onError_ = cb; }
+    void setOnMetadata(const std::function<void(const std::string& title, const std::string& artist)>& cb) { onMetadata_ = cb; }
 
 protected:
     std::function<void()> onEos_;
     std::function<void(const std::string&)> onError_;
+    std::function<void(const std::string&, const std::string&)> onMetadata_;
 };

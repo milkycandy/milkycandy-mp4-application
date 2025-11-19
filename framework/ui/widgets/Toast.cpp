@@ -19,7 +19,7 @@ void Toast::show(const std::string& text, Duration duration) {
     lv_label_set_text(label, text.c_str());
     lv_obj_set_style_text_color(label, lv_color_white(), 0);
     lv_obj_set_style_text_opa(label, 255, 0);
-    lv_obj_set_style_text_font(label, FontManager::getFont(22), 0);
+    lv_obj_set_style_text_font(label, FontManager::getDemibold(22), 0);
     lv_obj_set_style_pad_left(label, 22, 0);
     lv_obj_set_style_pad_right(label, 22, 0);
     lv_obj_set_style_pad_top(label, 0, 0);

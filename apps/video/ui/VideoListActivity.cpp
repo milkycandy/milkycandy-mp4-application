@@ -62,7 +62,7 @@ void VideoListActivity::displayFileList(const std::vector<FileEntry>& entries, i
     lv_label_set_text(footerLabel_, summary.c_str());
 
     lv_obj_set_style_text_color(footerLabel_, lv_color_hex(0x808080), 0);
-    lv_obj_set_style_text_font(footerLabel_, FontManager::getFont(24), 0);
+    lv_obj_set_style_text_font(footerLabel_, FontManager::getDemibold(24), 0);
     lv_obj_set_style_pad_top(footerLabel_, 20, 0);
     lv_obj_set_style_pad_bottom(footerLabel_, 20, 0);
 
