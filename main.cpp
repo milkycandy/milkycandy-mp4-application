@@ -50,7 +50,9 @@ int main(void) {
 
     ActivityManager &manager = ActivityManager::getInstance();
 
-    manager.startActivity(new LauncherActivity(&manager));
+    manager.startActivity(
+        std::make_unique<LauncherActivity>(&manager)
+    );
     manager.enableGlobalSwipe();
 
     // 主循环

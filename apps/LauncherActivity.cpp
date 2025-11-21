@@ -101,7 +101,7 @@ void LauncherActivity::launchMusicListActivity(lv_event_t* e) {
         // 判断释放点是否在对象范围内
         if(lv_obj_hit_test(obj, &point)) {
             ActivityManager& manager = ActivityManager::getInstance();
-            manager.startActivity(new MusicListActivity(&manager, "/root/music"));
+            manager.startActivity(std::make_unique<MusicListActivity>(&manager, "/root/music"));
         }
         // 如果不在范围内,则不触发,相当于"放弃点击"
     }
@@ -131,7 +131,7 @@ void LauncherActivity::launchMusicListActivity(lv_event_t* e) {
 void LauncherActivity::launchVideoListActivity(lv_event_t* e) {
     ActivityManager& manager = ActivityManager::getInstance();
     // 启动 VideoListActivity 并传入指定的初始路径
-    manager.startActivity(new VideoListActivity(&manager, "/root/video")); 
+    manager.startActivity(std::make_unique<VideoListActivity>(&manager, "/root/video"));
 }
 
 void LauncherActivity::launchSettingsActivity(lv_event_t* e) {

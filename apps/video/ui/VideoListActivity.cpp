@@ -110,13 +110,13 @@ void VideoListActivity::createListItem(lv_obj_t* parent, const FileEntry& entry,
 
 // --- Presenter调用的导航方法 ---
 void VideoListActivity::navigateToDirectory(const std::string& path) {
-    manager->startActivity(new VideoListActivity(manager, path));
+    manager->startActivity(std::make_unique<VideoListActivity>(manager, path));
 }
 
 void VideoListActivity::navigateToVideoPlayer(const std::string& path) {
     Toast::show("即将播放: " + path);
     // 启动播放器
-    manager->startActivity(new VideoPlayerActivity(manager, path));
+    manager->startActivity(std::make_unique<VideoPlayerActivity>(manager, path));
 }
 
 // --- 静态事件回调 ---

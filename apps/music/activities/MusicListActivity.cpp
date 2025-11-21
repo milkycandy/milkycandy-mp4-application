@@ -84,12 +84,12 @@ void MusicListActivity::createListItem(lv_obj_t* parent, FileEntry* entry, int i
 }
 
 void MusicListActivity::navigateToDirectory(const std::string& path) {
-    manager->startActivity(new MusicListActivity(manager, path));
+    manager->startActivity(std::make_unique<MusicListActivity>(manager, path));
 }
 
 void MusicListActivity::navigateToMusicPlayer(const std::string& path) {
     Toast::show("即将播放: " + path);
-    manager->startActivity(new MusicActivity(manager, path)); // 先占位
+    manager->startActivity(std::make_unique<MusicActivity>(manager, path));
 }
 
 void MusicListActivity::list_item_event_cb(lv_event_t* e) {
