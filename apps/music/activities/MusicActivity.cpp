@@ -35,36 +35,28 @@ void MusicActivity::onResume()
 
     // 订阅进度更新并刷新 UI（Slider 与时间标签）
     progressListenerId_ = audio.addProgressListener([this](int64_t posMs, int64_t durMs){
-        if (!view) return;
-        // 更新 Slider 范围和值：仅在时长变化时更新范围
-        int32_t dur = (durMs < 0) ? 0 : static_cast<int32_t>(durMs);
-        int32_t pos = (posMs < 0) ? 0 : static_cast<int32_t>(posMs);
-        if (dur > 0) {
-            if (lastDurationMs_ != dur) {
-                lv_slider_set_range(view->SeekBar, 0, dur);
-                lastDurationMs_ = dur;
+        // 安全检查
+        if (!view) return; 
+        if (durMs > 0) {
+            if (lastDurationMs_ != durMs) {
+                lv_slider_set_range(view->SeekBar, 0, durMs);
+                lastDurationMs_ = durMs;
             }
-            lv_slider_set_value(view->SeekBar, pos, LV_ANIM_OFF);
+            lv_slider_set_value(view->SeekBar, posMs, LV_ANIM_OFF);
         }
-        // 更新时间标签
-        auto fmt = [](int64_t ms){
-            if (ms < 0) return std::string("--:--");
-            int totalSec = static_cast<int>(ms / 1000);
-            int m = totalSec / 60;
-            int s = totalSec % 60;
-            char buf[16];
-            snprintf(buf, sizeof(buf), "%d:%02d", m, s);
-            return std::string(buf);
-        };
-        lv_label_set_text(view->CurrentTime, fmt(posMs).c_str());
+        int totalSecPos = static_cast<int>(posMs / 1000);
+        lv_label_set_text_fmt(view->CurrentTime, "%d:%02d", 
+                              totalSecPos / 60, 
+                              totalSecPos % 60);
+
         if (durMs > 0 && posMs >= 0) {
-            int64_t rem = durMs - posMs;
-            char buf[20];
-            int totalSec = static_cast<int>(rem / 1000);
-            int m = totalSec / 60;
-            int s = totalSec % 60;
-            snprintf(buf, sizeof(buf), "-%d:%02d", m, s);
-            lv_label_set_text(view->RemainingTime, buf);
+            // 使用总秒数减去当前秒数，保证两边变化同步
+            int totalSecDur = static_cast<int>(durMs / 1000);
+            int totalSecRem = totalSecDur - totalSecPos;
+            
+            lv_label_set_text_fmt(view->RemainingTime, "-%d:%02d", 
+                                  totalSecRem / 60, 
+                                  totalSecRem % 60);
         } else {
             lv_label_set_text(view->RemainingTime, "- --:--");
         }
@@ -117,10 +109,13 @@ void MusicActivity::onResume()
         if (!title.empty()) lv_label_set_text(view->SongTitle, title.c_str());
         if (!artist.empty()) lv_label_set_text(view->Artist, artist.c_str());
     });
+
+    printf("[MusicActivity] UI: onResume 完成，已添加监听器 (this=%p, progressID=%d)\n", this, progressListenerId_);
 }
 
 void MusicActivity::onDestroy()
 {
+    printf("[MusicActivity] UI: onDestroy 开始，即将移除监听器 (this=%p, progressID=%d)\n", this, progressListenerId_);
     // 注销进度监听，避免页面销毁后仍更新 UI
     if (progressListenerId_ != 0) {
         AudioService::getInstance().removeProgressListener(progressListenerId_);
@@ -134,4 +129,5 @@ void MusicActivity::onDestroy()
         AudioService::getInstance().removeMetadataListener(metadataListenerId_);
         metadataListenerId_ = 0;
     }
+    printf("[MusicActivity] UI: onDestroy 完成 (this=%p)。对象即将被销毁。\n", this);
 }

@@ -79,7 +79,7 @@ MusicPlayerView::MusicPlayerView(lv_obj_t* parent) {
     SeekBar = lv_slider_create(AreaSeekBar);
     lv_slider_set_value( SeekBar, 0, LV_ANIM_OFF);
     lv_obj_set_width( SeekBar, 398);
-    lv_obj_set_height( SeekBar, 9);
+    lv_obj_set_height( SeekBar, 19);
     lv_obj_set_align( SeekBar, LV_ALIGN_TOP_MID );
     lv_obj_set_style_bg_color(SeekBar, lv_color_hex(0xE5E5E5), LV_PART_MAIN | LV_STATE_DEFAULT );
     lv_obj_set_style_bg_opa(SeekBar, 56, LV_PART_MAIN| LV_STATE_DEFAULT);
