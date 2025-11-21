@@ -13,6 +13,7 @@ public:
 
     void onCreate() override;
     void onResume() override;
+    void onPause() override;
     void onDestroy() override;
 
 private:

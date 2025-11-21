@@ -111,7 +111,7 @@ int AudioService::addProgressListener(ProgressListener cb) {
     int id;
 
     {
-        std::lock_guard<std::mutex> lock(listenersMutex_);
+        std::lock_guard<std::recursive_mutex> lock(listenersMutex_);
         id = progressNextId_++;
         listeners_[id] = std::move(cb);
         
@@ -132,7 +132,7 @@ int AudioService::addProgressListener(ProgressListener cb) {
 void AudioService::removeProgressListener(int id) {
     bool shouldStop = false;
     {
-        std::lock_guard<std::mutex> lock(listenersMutex_);
+        std::lock_guard<std::recursive_mutex> lock(listenersMutex_);
         listeners_.erase(id);
         // 检查是否为空，但不立即停止，只设置标志位
         if (listeners_.empty()) {
@@ -147,26 +147,26 @@ void AudioService::removeProgressListener(int id) {
 }
 
 int AudioService::addMetadataListener(MetadataListener cb) {
-    std::lock_guard<std::mutex> lock(listenersMutex_);
+    std::lock_guard<std::recursive_mutex> lock(listenersMutex_);
     int id = metadataNextId_++;
     metadataListeners_[id] = std::move(cb);
     return id;
 }
 
 void AudioService::removeMetadataListener(int id) {
-    std::lock_guard<std::mutex> lock(listenersMutex_);
+    std::lock_guard<std::recursive_mutex> lock(listenersMutex_);
     metadataListeners_.erase(id);
 }
 
 int AudioService::addStateListener(StateListener cb) {
-    std::lock_guard<std::mutex> lock(listenersMutex_);
+    std::lock_guard<std::recursive_mutex> lock(listenersMutex_);
     int id = stateNextId_++;
     stateListeners_[id] = std::move(cb);
     return id;
 }
 
 void AudioService::removeStateListener(int id) {
-    std::lock_guard<std::mutex> lock(listenersMutex_);
+    std::lock_guard<std::recursive_mutex> lock(listenersMutex_);
     stateListeners_.erase(id);
 }
 
@@ -190,20 +190,17 @@ void AudioService::samplingLoop() {
         int64_t pos = getPositionMs();
         int64_t dur = getDurationMs();
         
-        std::vector<ProgressListener> listenersCopy;
+        bool hasListeners = false;
         {
-            std::lock_guard<std::mutex> lock(listenersMutex_);
-            if (!listeners_.empty()) {
-                for (auto& kv : listeners_) {
-                    if (kv.second) listenersCopy.push_back(kv.second);
-                }
-            }
+            std::lock_guard<std::recursive_mutex> lock(listenersMutex_);
+            hasListeners = !listeners_.empty();
         }
         
-        if (!listenersCopy.empty()) {
-            runOnUiThread([listenersCopy, pos, dur]() {
-                for (const auto& cb : listenersCopy) {
-                    if (cb) cb(pos, dur);
+        if (hasListeners) {
+            runOnUiThread([this, pos, dur]() {
+                std::lock_guard<std::recursive_mutex> lock(listenersMutex_);
+                for (const auto& kv : listeners_) {
+                    if (kv.second) kv.second(pos, dur);
                 }
             });
         }
@@ -213,39 +210,31 @@ void AudioService::samplingLoop() {
 }
 
 void AudioService::notifyMetadata(const std::string& title, const std::string& artist) {
-    std::vector<MetadataListener> listenersCopy;
-    
     {
-        std::lock_guard<std::mutex> lock(listenersMutex_);
+        std::lock_guard<std::recursive_mutex> lock(listenersMutex_);
         if (metadataListeners_.empty()) return;
-        for (auto& kv : metadataListeners_) {
-            if (kv.second) listenersCopy.push_back(kv.second);
-        }
     }
     
-    runOnUiThread([listenersCopy, title, artist]() {
-        for (const auto& cb : listenersCopy) {
-            if (cb) cb(title, artist);
+    runOnUiThread([this, title, artist]() {
+        std::lock_guard<std::recursive_mutex> lock(listenersMutex_);
+        for (const auto& kv : metadataListeners_) {
+            if (kv.second) kv.second(title, artist);
         }
     });
 }
 
 void AudioService::notifyStateChange() {
-    std::vector<StateListener> listenersCopy;
-    PlaybackState currentState;
+    PlaybackState currentState = state_.load();
 
     {
-        std::lock_guard<std::mutex> lock(listenersMutex_);
+        std::lock_guard<std::recursive_mutex> lock(listenersMutex_);
         if (stateListeners_.empty()) return;
-        currentState = state_.load();
-        for (auto& kv : stateListeners_) {
-            if (kv.second) listenersCopy.push_back(kv.second);
-        }
     }
 
-    runOnUiThread([listenersCopy, currentState]() {
-        for (const auto& cb : listenersCopy) {
-            if (cb) cb(currentState);
+    runOnUiThread([this, currentState]() {
+        std::lock_guard<std::recursive_mutex> lock(listenersMutex_);
+        for (const auto& kv : stateListeners_) {
+            if (kv.second) kv.second(currentState);
         }
     });
 }

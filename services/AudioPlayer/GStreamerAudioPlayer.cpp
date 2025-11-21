@@ -77,14 +77,14 @@ bool GStreamerAudioPlayer::buildPipelineFor(const std::string& path) {
         g_object_set(sink, "client-name", "MyApp Audio", NULL);
     }
     if (g_object_class_find_property(G_OBJECT_GET_CLASS(sink), "node-properties")) {
-        GstStructure* node_props = gst_structure_from_string("node.name=Music Output", NULL);
+        GstStructure* node_props = gst_structure_new("props", "node.name", G_TYPE_STRING, "Music Output", NULL);
         if (node_props) {
             g_object_set(sink, "node-properties", node_props, NULL);
             gst_structure_free(node_props);
         }
     }
     if (g_object_class_find_property(G_OBJECT_GET_CLASS(sink), "stream-properties")) {
-        GstStructure* stream_props = gst_structure_from_string("media.role=Music", NULL);
+        GstStructure* stream_props = gst_structure_new("props", "media.role", G_TYPE_STRING, "Music", NULL);
         if (stream_props) {
             g_object_set(sink, "stream-properties", stream_props, NULL);
             gst_structure_free(stream_props);

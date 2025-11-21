@@ -59,6 +59,7 @@
         "chrono": "cpp",
         "csignal": "cpp",
         "iomanip": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "codecvt": "cpp"
     }
 }

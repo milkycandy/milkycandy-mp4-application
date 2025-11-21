@@ -12,8 +12,7 @@ MusicActivity::MusicActivity(ActivityManager* manager, std::string path)
 // 析构函数
 MusicActivity::~MusicActivity() {}
 
-void MusicActivity::onCreate()
-{
+void MusicActivity::onCreate() {
     LV_LOG_USER("MusicActivity::onCreate");
     // swipeToReturnEnabled = false
 
@@ -21,15 +20,14 @@ void MusicActivity::onCreate()
 
 }
 
-void MusicActivity::onResume()
-{
+void MusicActivity::onResume() {
     LV_LOG_USER("MusicActivity::onResume");
     // 使用全局 AudioService 控制播放
     auto& audio = AudioService::getInstance();
     // 若是同一曲目则不重载源、不改变播放状态，仅订阅监听刷新 UI
     if (audio.getCurrentSource() != musicPath_) {
         audio.setSource(musicPath_);
-        audio.setVolume(0.4f);
+        audio.setVolume(0.05f);
         audio.play();
     }
 
@@ -113,9 +111,8 @@ void MusicActivity::onResume()
     printf("[MusicActivity] UI: onResume 完成，已添加监听器 (this=%p, progressID=%d)\n", this, progressListenerId_);
 }
 
-void MusicActivity::onDestroy()
-{
-    printf("[MusicActivity] UI: onDestroy 开始，即将移除监听器 (this=%p, progressID=%d)\n", this, progressListenerId_);
+void MusicActivity::onPause() {
+    printf("[MusicActivity] UI: onPause 开始，即将移除监听器 (this=%p, progressID=%d)\n", this, progressListenerId_);
     // 注销进度监听，避免页面销毁后仍更新 UI
     if (progressListenerId_ != 0) {
         AudioService::getInstance().removeProgressListener(progressListenerId_);
@@ -129,5 +126,9 @@ void MusicActivity::onDestroy()
         AudioService::getInstance().removeMetadataListener(metadataListenerId_);
         metadataListenerId_ = 0;
     }
-    printf("[MusicActivity] UI: onDestroy 完成 (this=%p)。对象即将被销毁。\n", this);
+    printf("[MusicActivity] UI: onPause 完成 (this=%p)。对象即将被销毁。\n", this);
+}
+
+void MusicActivity::onDestroy() {
+
 }

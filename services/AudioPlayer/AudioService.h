@@ -58,7 +58,7 @@ private:
 private:
     std::unique_ptr<GStreamerAudioPlayer> player_;
     std::atomic<PlaybackState> state_{PlaybackState::Stopped};
-    std::mutex listenersMutex_;
+    std::recursive_mutex listenersMutex_;
     std::unordered_map<int, ProgressListener> listeners_;
     int progressNextId_ = 1;
 
