@@ -1,10 +1,10 @@
 #pragma once
 
 /**
- * @brief 任务分发器
- *
+ * @brief [Deprecated] 任务分发器
+ * @warning [Deprecated] 安全性尚不明确
  * 提供任务调度功能：
- * - runOnUiThread: 投递任务到 UI 线程执行
+ * - runWithLvglLock: 在 LVGL 锁内同步执行任务
  * - postDelayed: 延迟执行任务（仅限 UI 线程调用）
  */
 
@@ -49,18 +49,14 @@ void lvgl_timer_lambda_executor(lv_timer_t* timer) {
 } // namespace
 
 /**
- * @brief [线程安全] 将任务调度到 LVGL UI 线程执行
+ * @brief [线程安全] 在 LVGL 锁内同步执行任务
  *
- * 移交 `task` 的所有权给 LVGL
- * 任务在 `lvgl_async_executor` 中执行并在执行后销毁。
+ * @param task 要执行的任务
  */
-
-inline void runOnUiThread(std::function<void()>&& task) {
-    auto func_ptr = new std::function<void()>(std::move(task));
-    lv_result_t res = lv_async_call(lvgl_async_executor, func_ptr);
-    if (res != LV_RESULT_OK) {
-        delete func_ptr;  // 防止内存泄漏
-    }
+inline void runWithLvglLock(std::function<void()>&& task) {
+    lv_lock();
+    task();
+    lv_unlock();
 }
 
 /**

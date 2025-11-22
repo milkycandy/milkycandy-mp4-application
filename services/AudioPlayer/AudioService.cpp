@@ -187,6 +187,7 @@ void AudioService::stopProgressSampling() {
 void AudioService::samplingLoop() {
     using namespace std::chrono_literals;
     while (samplingRunning_.load()) {
+        // LV_LOG_USER("samplingLoop");
         int64_t pos = getPositionMs();
         int64_t dur = getDurationMs();
         
@@ -197,7 +198,7 @@ void AudioService::samplingLoop() {
         }
         
         if (hasListeners) {
-            runOnUiThread([this, pos, dur]() {
+            runWithLvglLock([this, pos, dur]() {
                 std::lock_guard<std::recursive_mutex> lock(listenersMutex_);
                 for (const auto& kv : listeners_) {
                     if (kv.second) kv.second(pos, dur);
@@ -215,7 +216,7 @@ void AudioService::notifyMetadata(const std::string& title, const std::string& a
         if (metadataListeners_.empty()) return;
     }
     
-    runOnUiThread([this, title, artist]() {
+    runWithLvglLock([this, title, artist]() {
         std::lock_guard<std::recursive_mutex> lock(listenersMutex_);
         for (const auto& kv : metadataListeners_) {
             if (kv.second) kv.second(title, artist);
@@ -231,7 +232,7 @@ void AudioService::notifyStateChange() {
         if (stateListeners_.empty()) return;
     }
 
-    runOnUiThread([this, currentState]() {
+    runWithLvglLock([this, currentState]() {
         std::lock_guard<std::recursive_mutex> lock(listenersMutex_);
         for (const auto& kv : stateListeners_) {
             if (kv.second) kv.second(currentState);

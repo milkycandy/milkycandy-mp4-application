@@ -265,9 +265,7 @@ gboolean GStreamerAudioPlayer::onBusMessage(GstBus*, GstMessage* msg, gpointer u
             gst_message_parse_error(msg, &err, &dbg);
             std::string reason = err ? err->message : "unknown error";
             if (self->onError_) {
-                runOnUiThread([cb = self->onError_, reason] {
-                    cb(reason);
-                });
+                self->onError_(reason);
             }
             if (err) g_error_free(err);
             if (dbg) g_free(dbg);
@@ -275,9 +273,7 @@ gboolean GStreamerAudioPlayer::onBusMessage(GstBus*, GstMessage* msg, gpointer u
         }
         case GST_MESSAGE_EOS: {
             if (self->onEos_) {
-                runOnUiThread([cb = self->onEos_] {
-                    cb();
-                });
+                self->onEos_();
             }
             break;
         }
@@ -345,8 +341,6 @@ int64_t GStreamerAudioPlayer::getPositionMs() const {
 }
 void GStreamerAudioPlayer::emitMetadata(const std::string& title, const std::string& artist) {
     if (onMetadata_) {
-        runOnUiThread([cb = onMetadata_, title, artist](){
-            cb(title, artist);
-        });
+        onMetadata_(title, artist);
     }
 }
