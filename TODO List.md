@@ -1,7 +1,7 @@
 - [x] 把所有图片换回png，因为现在的png性能已经够快了
 - [x] 调整代码结构，按Application分开组织代码
-- [ ] 从Activity中分离UI创建代码
-- [ ] MusicActivity重建后恢复当前播放的歌曲信息
+- [x] 从Activity中分离UI创建代码
+- [x] MusicActivity重建后恢复当前播放的歌曲信息
 - [ ] 专辑封面解析
 - [ ] 专辑封面取色
 
