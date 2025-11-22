@@ -57,12 +57,24 @@ int main(void) {
 
     // 主循环
     while (1) {
-        lv_timer_handler();
+        // lv_timer_handler();
 
-        usleep(200);
-        // uint32_t sleep_ms = lv_timer_handler();
+        // usleep(200);
+        struct timespec start_time, end_time;
+        clock_gettime(CLOCK_MONOTONIC, &start_time);
 
-        // usleep(sleep_ms * 1000);
+        uint32_t sleep_ms = lv_timer_handler();
+
+        clock_gettime(CLOCK_MONOTONIC, &end_time);
+        long long elapsed_ms = (end_time.tv_sec - start_time.tv_sec) * 1000 +
+                               (end_time.tv_nsec - start_time.tv_nsec) / 1000000;
+
+        if (elapsed_ms > 480) {
+            int skipped_frames = elapsed_ms / 16;
+            LV_LOG_WARN("Skipped %d frames! The program may be doing too much work on its main thread.", skipped_frames);
+        }
+
+        usleep(sleep_ms * 1000);
     }
 
     return 0;
