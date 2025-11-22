@@ -124,13 +124,17 @@ void ActivityManager::finishCurrentActivity() {
 void ActivityManager::finalizeActivityDestruction(Activity* activityRawPtr) {
     // 在 trashStack 中查找匹配的 unique_ptr 并移除
     // 移除操作将触发 unique_ptr 的析构，从而安全释放 Activity 内存
-    auto it = std::remove_if(trashStack.begin(), trashStack.end(),
+auto it = std::find_if(trashStack.begin(), trashStack.end(),
         [activityRawPtr](const std::unique_ptr<Activity>& ptr) {
             return ptr.get() == activityRawPtr;
         });
     
     if (it != trashStack.end()) {
-        trashStack.erase(it, trashStack.end());
+        // 在销毁前触发生命周期回调
+        (*it)->onDestroy();
+
+        // 触发 unique_ptr 的析构，安全释放 Activity 内存
+        trashStack.erase(it);
     }
 }
 

@@ -7,9 +7,6 @@ Activity::Activity(ActivityManager* manager)
 }
 
 Activity::~Activity() {
-    // 触发子类定义的销毁逻辑
-    onDestroy();
-
     // 释放 LVGL 根对象
     if (root) {
         lv_obj_delete(root);
