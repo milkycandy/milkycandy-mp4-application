@@ -1,8 +1,7 @@
 #pragma once
 
 /**
- * @brief [Deprecated] 任务分发器
- * @warning [Deprecated] 安全性尚不明确
+ * @brief 任务分发器
  * 提供任务调度功能：
  * - runWithLvglLock: 在 LVGL 锁内同步执行任务
  * - postDelayed: 延迟执行任务（仅限 UI 线程调用）
