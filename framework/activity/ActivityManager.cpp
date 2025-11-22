@@ -100,24 +100,24 @@ void ActivityManager::finishCurrentActivity() {
     // 根 Activity 不允许被 finish
     if (activityStack.size() < 2) return;
 
-    // 1. 转移所有权：从运行栈移出
+    // 转移所有权：从运行栈移出
     std::unique_ptr<Activity> activityToFinish = std::move(activityStack.back());
     activityStack.pop_back();
 
     Activity* rawPtr = activityToFinish.get();
     rawPtr->onPause();
     
-    // 2. 暂存所有权：移入垃圾回收栈，确保对象在动画期间存活
+    // 移入垃圾回收栈，确保对象在动画期间存活
     trashStack.push_back(std::move(activityToFinish));
 
-    // 3. 恢复下层 Activity
+    // 恢复下层 Activity 可见性
     if (!activityStack.empty()) {
         Activity* newTop = activityStack.back().get();
         lv_obj_clear_flag(newTop->root, LV_OBJ_FLAG_HIDDEN);
         newTop->onResume();
     }
     
-    // 4. 播放退出动画，动画结束回调将触发真正的析构
+    // 播放退出动画，动画结束回调将触发真正的析构
     playDisappearAnimation(rawPtr->root, Callbacks::onExitAnimationComplete, rawPtr);
 }
 
