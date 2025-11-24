@@ -213,7 +213,6 @@ void ActivityManager::handleSwipeEnd(const lv_point_t& startPoint) {
 
     if (currentX > threshold) {
         // 判定为返回：执行标准的 finish 流程
-        // 手动模拟 finishCurrentActivity 的部分逻辑，因为已经发生了位移
         
         std::unique_ptr<Activity> ptr = std::move(activityStack.back());
         activityStack.pop_back();
